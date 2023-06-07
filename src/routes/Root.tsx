@@ -1,15 +1,17 @@
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+
+import { Outlet } from 'react-router-dom'
+import { Box, Toolbar } from '@mui/material'
+import Navbar from '../components/Navbar'
 
 const Root = () => {
   return (
     <>
-    <div>
-      <Link to='/'>Home</Link>
-      <Link to='/Products'>Products</Link>
-      <Link to='/login'>Login</Link>
-    </div>
-      <Outlet/> 
+      <Navbar/>
+       <Box component="main" sx={{ p: 3 }}>
+        <Toolbar/>
+        <Outlet/> 
+      </Box>
+      
     </>
   )
 }

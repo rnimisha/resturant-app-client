@@ -1,7 +1,7 @@
-import React from 'react'
+
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import Home from './containers/Home'
-import Root from './routes/root'
+import Root from './routes/Root'
 import Login from './containers/Login'
 import Products from './containers/Products'
 
