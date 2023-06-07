@@ -1,8 +1,28 @@
 import React from 'react'
+import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+import Home from './containers/Home'
+import Root from './routes/root'
+import Login from './containers/Login'
+import Products from './containers/Products'
 
-function App() {
+const App = () => {
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Root/>,
+      children: [
+        {path: '/', element: <Home/>},
+        {path: '/products', element: <Products/>},
+        {path: '/login', element: <Login/>},
+      ]
+    }
+  ])
+
   return (
-    <div>App</div>
+    <>
+      <RouterProvider router={router}/>
+    </>
   )
 }
 
