@@ -33,7 +33,7 @@ const Navbar = (props: Props) => {
     };
 
     const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', width: '100%' }}>
         <Typography variant="h6" sx={{ my: 2 }}>
             Resturnant Name
         </Typography>

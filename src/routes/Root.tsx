@@ -7,7 +7,7 @@ const Root = () => {
   return (
     <>
       <Navbar/>
-       <Box component="main" sx={{ p: 3 }}>
+       <Box component="main" sx={{ p: 3, minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
         <Toolbar/>
         <Outlet/> 
       </Box>

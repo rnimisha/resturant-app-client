@@ -4,6 +4,7 @@ import Home from './containers/Home'
 import Root from './routes/Root'
 import Login from './containers/Login'
 import Products from './containers/Products'
+import GlobalStyles from './assets/style/global.styled'
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
 
   return (
     <>
+      <GlobalStyles/>
       <RouterProvider router={router}/>
     </>
   )

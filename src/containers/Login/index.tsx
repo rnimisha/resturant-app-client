@@ -1,12 +1,16 @@
 import { Container } from '@mui/material'
-import { Form, Formik, Field, FormikHelpers} from 'formik'
+import { Formik, FormikHelpers} from 'formik'
 import { ErrorResponse, User} from '../../utils/interface/interface'
 import { useAppDispatch } from '../../app/hook'
 import { loginUser } from '../../features/userSlice'
 import { extractError } from '../../utils/common'
+import InputBox from '../../components/InputBox'
+import { FormStyled } from './login.styled'
+import Heading from '../../components/Heading'
+import AppButton from '../../components/AppButton'
 
 
-const Login: React.FC<{}>  = () => {
+const Login  = () => {
 
   const dispatch = useAppDispatch()
 
@@ -38,21 +42,18 @@ const Login: React.FC<{}>  = () => {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container sx={{justifyContent: 'center', alignItems: 'center', flex: 1, display: 'flex', flexDirection: 'column'}}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
         {({ errors, touched }) => (
-          <Form>
-            <Field name="email" />
-            {touched.email && errors.email && <div>{errors.email}</div>}
-
-            <Field name="password" />
-            {touched.password && errors.password && <div>{errors.password}</div>}
-
-            <button type="submit">Login</button>
-          </Form>
+          <FormStyled>
+            <Heading text='Login Form'/>
+            <InputBox name='email' placeholder='Your email' err={errors.email} touched={touched.email}/>
+            <InputBox type='password' name='password' placeholder='Your password' err={errors.password} touched={touched.password}/>
+            <AppButton type='submit' text='Login'/>
+          </FormStyled>
         )}
       </Formik>
     </Container>
