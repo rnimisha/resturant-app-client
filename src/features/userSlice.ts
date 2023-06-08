@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { ErrorResponse, User } from '../utils/interface/interface'
+import { User } from '../utils/interface/interface'
 import { loginUsers } from '../services/auth.services'
 
 export interface UserInterface{
@@ -9,7 +9,6 @@ export interface UserInterface{
     token: string 
     role: 'C' | 'A' | null,
     loading: boolean
-    error: string
 }
 
 const initialState: UserInterface = {
@@ -18,21 +17,14 @@ const initialState: UserInterface = {
     name: '',
     token: '',
     role: null,
-    loading: false,
-    error: ''
+    loading: false
 }
 
 export const loginUser = createAsyncThunk(
     'auth/login',
     async (userData: User )=>{
-        try{
-            const response = await loginUsers(userData)
-            return response
-        }
-        catch(error){
-
-            return error
-        }
+        const response = await loginUsers(userData)
+        return response.data as User
     }
 )
 
@@ -48,13 +40,18 @@ export const userSlice = createSlice({
                 state.loading = true
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log(state, action)
+                const userData: User = action.payload as User;
                 state.loading = false
-                state.error = ''
+                state.user_id = userData.user_id || null
+                state.email = userData.email 
+                state.token = userData.token || ''
+                state.role = userData.role || null
+                state.name = userData.name || ''
+
             })
-            .addCase(loginUser.rejected, (state) =>{
+            .addCase(loginUser.rejected, (state, action) =>{
                 state.loading = false
-                state.error = 'error'
+                throw new Error(action.error.message)
             })
     }
 })

@@ -12,15 +12,15 @@ export const loginUsers = async (user: User):  Promise<AxiosResponse<User>> => {
   } 
   catch (error) {
       const axiosError = error as AxiosError;
-        let err: ErrorResponse = {status: false, msg: 'Unexpected Error'};
+        let err: ErrorResponse = {success: false, msg: 'Unexpected Error'};
 
         if (axiosError?.response?.data) {
-            const status: boolean = (axiosError.response.data as ErrorResponse).status || false;
+            const success: boolean = (axiosError.response.data as ErrorResponse).success || false;
             const msg: string = (axiosError.response.data as ErrorResponse).msg || 'Unexpected Error';
             const fieldError = (axiosError.response.data as ErrorResponse).fieldError || [];
 
             err = {
-                status,
+                success,
                 msg,
                 fieldError
             };

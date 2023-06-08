@@ -10,13 +10,13 @@ export interface User{
     password?: string
 }
 
-interface FieldError{
+export interface FieldError{
     field: string,
     description: string
 }
 
 export interface ErrorResponse {
-    status: boolean,
+    success: boolean,
     msg: string,
     fieldError?: [] | FieldError[]
 }
@@ -24,4 +24,15 @@ export interface ErrorResponse {
 export interface allResponse {
     success : boolean,
     data: any
+}
+
+export interface userError {
+    user_id?: string
+    email?: string 
+    name?: string
+    token?: string 
+    role?: string ,
+    address?: string
+    phone?: string,
+    password?: string
 }

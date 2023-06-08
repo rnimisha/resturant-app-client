@@ -1,27 +1,47 @@
 import { Container } from '@mui/material'
-import { Form, Formik, Field} from 'formik'
-import { User } from '../../utils/interface/interface'
+import { Form, Formik, Field, FormikHelpers} from 'formik'
+import { ErrorResponse, User} from '../../utils/interface/interface'
 import { useAppDispatch } from '../../app/hook'
 import { loginUser } from '../../features/userSlice'
+import { extractError } from '../../utils/common'
 
-function Login() {
+
+const Login: React.FC<{}>  = () => {
 
   const dispatch = useAppDispatch()
 
-  const onSubmit = (values: User)=>{
+  const handleSubmit = async (values: User, actions: FormikHelpers<User>)=>{
     const {email, password} = values
-    dispatch(loginUser({email, password}))
+    
+    try{
+      await dispatch(loginUser({email, password}))
+    }
+    catch(error)
+    {
+      const err = JSON.parse((error as Error).message as string) as ErrorResponse
+      if(err.fieldError)
+      {
+        const errs = extractError(err.fieldError)
+        actions.setErrors(errs)
+        console.log(errs)
+      }
+      else{
+        alert(err.msg)
+      }
+    } 
+    
   }
+
+  const initialValues: User = {
+    email: '',
+    password: '',
+  }
+
   return (
     <Container maxWidth="lg">
       <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        onSubmit={values => {
-          onSubmit(values)
-        }}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
       >
         {({ errors, touched }) => (
           <Form>
@@ -37,6 +57,7 @@ function Login() {
       </Formik>
     </Container>
   )
+
 }
 
 export default Login
