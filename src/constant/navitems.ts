@@ -8,6 +8,10 @@ const NAVITEMS = [
         name: 'Menu',
     },
     {
+        path: '/cart',
+        name: 'Cart',
+    },
+    {
         path: '/login',
         name: 'Login',
     },
