@@ -1,9 +1,7 @@
-
+import React from 'react';
 
 function Register() {
-  return (
-    <div>Register</div>
-  )
+    return <div>index</div>;
 }
 
-export default Register
+export default Register;

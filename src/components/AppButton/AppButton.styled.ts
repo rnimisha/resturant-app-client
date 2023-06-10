@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import COLOR from "../../constant/color";
-
+import COLOR from '../../constant/color';
 
 export const ButtonStyled = styled.button`
     padding: 20px 10px;
@@ -15,17 +14,16 @@ export const ButtonStyled = styled.button`
     color: ${COLOR.black};
     font-weight: 500;
 
-    &:hover{
+    &:hover {
         background-color: ${COLOR.lightPrimary};
         border-width: 2px;
         border-color: ${COLOR.primary};
         color: ${COLOR.primary};
     }
 
-
     @media (max-width: 510px) {
         min-width: 90%;
         font-size: 16px;
         padding: 5px;
     }
-`
+`;

@@ -1,6 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import COLOR from '../../constant/color'
-
+import { createGlobalStyle } from 'styled-components';
+import COLOR from '../../constant/color';
 
 const GlobalStyles = createGlobalStyle`
   *{
@@ -20,6 +19,6 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-`
+`;
 
-export default GlobalStyles
+export default GlobalStyles;

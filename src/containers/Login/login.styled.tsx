@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { Form } from 'formik'
+import styled from 'styled-components';
+import { Form } from 'formik';
 
 export const FormStyled = styled(Form)`
     width: 80%;
@@ -19,5 +19,4 @@ export const FormStyled = styled(Form)`
         width: 90%;
         margin-left: 5%;
     }
-
-`
+`;

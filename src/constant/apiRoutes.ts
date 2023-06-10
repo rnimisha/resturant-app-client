@@ -1,5 +1,5 @@
 const APIROUTES = {
-    LOGIN: '/auth/login'
-}
+    LOGIN: '/auth/login',
+};
 
-export default APIROUTES
+export default APIROUTES;
