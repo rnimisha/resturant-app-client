@@ -4,6 +4,7 @@ import Root from './routes/Root';
 import Login from './containers/Login';
 import Products from './containers/Products';
 import Cart from './containers/Cart';
+import Logout from './containers/Logout';
 
 import GlobalStyles from './assets/style/global.styled';
 
@@ -17,6 +18,7 @@ const App = (): JSX.Element => {
                 { path: '/products', element: <Products /> },
                 { path: '/login', element: <Login /> },
                 { path: '/cart', element: <Cart /> },
+                { path: '/logout', element: <Logout /> },
             ],
         },
     ]);

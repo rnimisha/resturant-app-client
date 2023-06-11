@@ -12,7 +12,9 @@ const useUserRole = ({ rolesPermitted }: PropsType): void => {
     const { token, role } = useAppSelector((state) => state.user);
 
     useEffect(() => {
-        token.trim().length < 0 && navigate('/login');
+        if (token === '' || token.trim().length < 1) {
+            navigate('/login');
+        }
 
         if (role !== null) {
             !rolesPermitted.includes(role) && navigate('/');
