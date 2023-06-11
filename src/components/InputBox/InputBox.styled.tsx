@@ -24,4 +24,5 @@ export const Error = styled.div`
     padding: 0;
     margin-top: 4px;
     text-align: center;
+    margin-bottom: -22px;
 `;

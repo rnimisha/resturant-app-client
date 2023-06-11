@@ -9,6 +9,7 @@ import Heading from '../../components/Heading';
 import AppButton from '../../components/AppButton';
 import { Link, useNavigate } from 'react-router-dom';
 import LOGIN_VALIDATION_SCHEMA from '../../validation/LOGIN_VALIDATION_SCHEMA';
+import { Box } from '@mui/material';
 
 const Login = (): JSX.Element => {
     const dispatch = useAppDispatch();
@@ -63,12 +64,12 @@ const Login = (): JSX.Element => {
                             touched={touched.password}
                         />
                         <AppButton type="submit" text="Login" />
-                        <span>
+                        <Box mt={3}>
                             New user?
                             <Link to="/register">
                                 <span className="links"> Register here</span>
                             </Link>
-                        </span>
+                        </Box>
                     </FormStyled>
                 )}
             </Formik>

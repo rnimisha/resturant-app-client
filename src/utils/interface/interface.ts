@@ -46,3 +46,14 @@ export interface RegisterUser{
     password: string,
     confirmpass?: string
 }
+
+export interface ProductType {
+    product_id?: number,
+    name?: string,
+    quantity?: number,
+    minPrice?: number,
+    maxPrice?: number,
+    category_id?: number,
+    page?: number,
+    images?: string[]
+}

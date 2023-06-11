@@ -16,6 +16,7 @@ const InputBox = ({ ...props }: PropsType): JSX.Element => {
                 width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginBottom: '40px',
             }}
         >
             <TextBox {...props} />

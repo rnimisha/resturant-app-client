@@ -12,6 +12,7 @@ import {
 import { registerUsers } from '../../services/auth.services';
 import { extractError } from '../../utils/common';
 import REGISTER_VALIDATION_SCHEMA from '../../validation/REGISTER_VALIDATION_SCHEMA';
+import { Box } from '@mui/material';
 
 const Register = (): JSX.Element => {
     const navigate = useNavigate();
@@ -101,12 +102,12 @@ const Register = (): JSX.Element => {
                             touched={touched.address}
                         />
                         <AppButton type="submit" text="Register" />
-                        <span>
+                        <Box mt={3}>
                             Already got account?
                             <Link to="/login">
                                 <span className="links"> Login</span>
                             </Link>
-                        </span>
+                        </Box>
                     </FormStyled>
                 )}
             </Formik>

@@ -23,4 +23,9 @@ export const Row = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 95%;
+
+    @media (max-width: 980px) {
+        flex-direction: column;
+        width: 100%;
+    }
 `;

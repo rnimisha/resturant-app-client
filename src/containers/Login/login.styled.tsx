@@ -8,7 +8,6 @@ export const FormStyled = styled(Form)`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 2rem;
     height: 100%;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(70, 70, 70, 0.09);
