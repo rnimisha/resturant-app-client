@@ -59,3 +59,17 @@ export interface ProductType {
     page?: number,
     images?: string[]
 }
+
+export interface CartItem {
+    cart_id? : number,
+    product_id: number,
+    cart_prod_quantity: number,
+    user_id: number,
+    price: number,
+    name: string,
+    prod_quantity?: number
+}
+
+export interface Carts {
+    products : CartItem[] | []
+}
