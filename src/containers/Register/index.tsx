@@ -11,6 +11,7 @@ import {
 } from '../../utils/interface/interface';
 import { registerUsers } from '../../services/auth.services';
 import { extractError } from '../../utils/common';
+import REGISTER_VALIDATION_SCHEMA from '../../validation/REGISTER_VALIDATION_SCHEMA';
 
 const Register = (): JSX.Element => {
     const navigate = useNavigate();
@@ -51,6 +52,7 @@ const Register = (): JSX.Element => {
                 className="centered"
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
+                validationSchema={REGISTER_VALIDATION_SCHEMA}
             >
                 {({ errors, touched }) => (
                     <FormStyled>

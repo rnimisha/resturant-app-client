@@ -8,6 +8,7 @@ import { FormStyled, MainContainer } from './login.styled';
 import Heading from '../../components/Heading';
 import AppButton from '../../components/AppButton';
 import { Link, useNavigate } from 'react-router-dom';
+import LOGIN_VALIDATION_SCHEMA from '../../validation/LOGIN_VALIDATION_SCHEMA';
 
 const Login = (): JSX.Element => {
     const dispatch = useAppDispatch();
@@ -40,7 +41,11 @@ const Login = (): JSX.Element => {
 
     return (
         <MainContainer>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validationSchema={LOGIN_VALIDATION_SCHEMA}
+            >
                 {({ errors, touched }) => (
                     <FormStyled>
                         <Heading text="Login Form" />
