@@ -54,6 +54,8 @@ export interface ProductType {
     minPrice?: number,
     maxPrice?: number,
     category_id?: number,
+    price?: number,
+    unit?: string,
     page?: number,
     images?: string[]
 }

@@ -3,6 +3,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
 import { getProducts } from '../../services/product.services';
 import { type ProductType } from '../../utils/interface/interface';
+import ProductCard from '../../components/ProductCard';
+import { ProductContainer } from './product.styled';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -12,6 +14,7 @@ const Product = (): JSX.Element => {
 
     const fetchProducts = async (): Promise<void> => {
         try {
+            // await new Promise<void>((resolve) => setTimeout(resolve, 2000));
             const response = await getProducts({ page });
 
             if (response.data.length > 0) {
@@ -37,30 +40,31 @@ const Product = (): JSX.Element => {
 
     return (
         <div>
-            <div>
-                <InfiniteScroll
-                    dataLength={products.length}
-                    next={fetchProducts}
-                    hasMore={hasMore}
-                    loader={<h2>loading......</h2>}
-                    endMessage={
-                        <p style={{ textAlign: 'center' }}>
-                            <b>Yay! You have seen it all</b>
-                        </p>
-                    }
-                >
-                    {products.map((item, index) => {
-                        return (
-                            <div
-                                key={index}
-                                style={{ width: '200px', height: '600px' }}
-                            >
-                                {item.name} {item.product_id}
-                            </div>
-                        );
-                    })}
-                </InfiniteScroll>
-            </div>
+            <InfiniteScroll
+                dataLength={products.length}
+                next={fetchProducts}
+                hasMore={hasMore}
+                loader={<h2>loading......</h2>}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                <ProductContainer>
+                    {products.map((item, index) => (
+                        <ProductCard
+                            key={index}
+                            name={item.name}
+                            product_id={item.product_id}
+                            quantity={item.quantity}
+                            price={item.price}
+                            unit={item.unit}
+                            category_id={item.category_id}
+                        />
+                    ))}
+                </ProductContainer>
+            </InfiniteScroll>
         </div>
     );
 };
