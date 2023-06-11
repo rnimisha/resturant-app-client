@@ -9,18 +9,19 @@ import { FormStyled } from './login.styled';
 import Heading from '../../components/Heading';
 import AppButton from '../../components/AppButton';
 
-function Login() {
+const Login = (): JSX.Element => {
     const dispatch = useAppDispatch();
 
-    const handleSubmit = async (values: User, actions: FormikHelpers<User>) => {
+    const handleSubmit = async (
+        values: User,
+        actions: FormikHelpers<User>
+    ): Promise<void> => {
         const { email, password } = values;
 
         try {
             await dispatch(loginUser({ email, password }));
         } catch (error) {
-            const err = JSON.parse(
-                (error as Error).message 
-            ) as ErrorResponse;
+            const err = JSON.parse((error as Error).message) as ErrorResponse;
             if (err.fieldError != null) {
                 const errs = extractError(err.fieldError);
                 actions.setErrors(errs);
@@ -69,6 +70,6 @@ function Login() {
             </Formik>
         </Container>
     );
-}
+};
 
 export default Login;

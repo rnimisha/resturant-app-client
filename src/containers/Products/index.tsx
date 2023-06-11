@@ -1,7 +1,5 @@
-import React from 'react';
+const Product = (): JSX.Element => {
+    return <div>index</div>;
+};
 
-function Products() {
-    return <div>products</div>;
-}
-
-export default Products;
+export default Product;

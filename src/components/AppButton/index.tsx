@@ -5,8 +5,8 @@ interface PropsType {
     type?: 'submit' | 'reset' | 'button';
 }
 
-function AppButton({ text, type }: PropsType) {
+const AppButton = ({ text, type }: PropsType): JSX.Element => {
     return <ButtonStyled type={type}>{text}</ButtonStyled>;
-}
+};
 
 export default AppButton;

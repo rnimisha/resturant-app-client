@@ -1,7 +1,5 @@
-import React from 'react';
-
-function Home() {
-    return <div>home</div>;
-}
+const Home = (): JSX.Element => {
+    return <div>index</div>;
+};
 
 export default Home;

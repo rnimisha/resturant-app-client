@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,8 +14,13 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import NAVITEMS from '../../constant/navitems';
+import {
+    NAVITEMS_WITHAUTH,
+    NAVITEMS_WITHOUTAUTH,
+    type navType,
+} from '../../constant/navitems';
 import COLOR from '../../constant/color';
+import { useAppSelector } from '../../app/hook';
 
 interface Props {
     window?: () => Window;
@@ -23,11 +28,23 @@ interface Props {
 
 const drawerWidth = 240;
 
-function Navbar(props: Props) {
+const Navbar = (props: Props): JSX.Element => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const { token } = useAppSelector((state) => state.user);
 
-    const handleDrawerToggle = () => {
+    const [navItems, setnavItems] = useState<navType>([]);
+
+    useEffect(() => {
+        const items =
+            token.trim().length === 0
+                ? NAVITEMS_WITHOUTAUTH
+                : NAVITEMS_WITHAUTH;
+
+        setnavItems(items);
+    }, [token]);
+
+    const handleDrawerToggle = (): void => {
         setMobileOpen((prevState) => !prevState);
     };
 
@@ -41,7 +58,7 @@ function Navbar(props: Props) {
             </Typography>
             <Divider />
             <List>
-                {NAVITEMS.map((item, index) => (
+                {navItems.map((item, index) => (
                     <ListItem key={index} disablePadding>
                         <Link to={item.path}>
                             <ListItemButton
@@ -96,7 +113,7 @@ function Navbar(props: Props) {
                         Resturant
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        {NAVITEMS.map((item, index) => (
+                        {navItems.map((item, index) => (
                             <Link to={item.path} key={index}>
                                 <Button sx={{ color: COLOR.black }}>
                                     {item.name}
@@ -128,6 +145,6 @@ function Navbar(props: Props) {
             </Box>
         </Box>
     );
-}
+};
 
 export default Navbar;

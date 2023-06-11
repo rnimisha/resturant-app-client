@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import COLOR from '../../constant/color';
+import COLOR from '../../constant/color.ts';
 
 export const ButtonStyled = styled.button`
     padding: 20px 10px;

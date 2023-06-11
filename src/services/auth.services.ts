@@ -18,7 +18,7 @@ export const loginUsers = async (user: User): Promise<AxiosResponse<User>> => {
                 (axiosError.response.data as ErrorResponse).msg ||
                 'Unexpected Error';
             const fieldError =
-                ((axiosError.response.data as ErrorResponse).fieldError != null) || [];
+                (axiosError.response.data as ErrorResponse).fieldError || [];
 
             err = {
                 success,

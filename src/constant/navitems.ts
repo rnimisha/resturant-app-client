@@ -1,7 +1,22 @@
-const NAVITEMS = [
+export const NAVITEMS_WITHOUTAUTH = [
     {
         path: '/',
-        name: 'Home',
+        name: 'Home',   
+    },
+    {
+        path: '/products',
+        name: 'Menu',
+    },
+    {
+        path: '/login',
+        name: 'Login',
+    },
+];
+
+export const NAVITEMS_WITHAUTH = [
+    {
+        path: '/',
+        name: 'Home',   
     },
     {
         path: '/products',
@@ -12,10 +27,14 @@ const NAVITEMS = [
         name: 'Cart',
     },
     {
-        path: '/login',
-        name: 'Login',
+        path: '/logout',
+        name: 'Logout',
     },
 ];
 
-// eslint-disable-next-line react-refresh/only-export-components
-export default NAVITEMS;
+interface navElement {
+    path: string;
+    name: string;
+};
+
+export type  navType = navElement[];

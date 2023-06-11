@@ -7,7 +7,7 @@ import Cart from './containers/Cart';
 
 import GlobalStyles from './assets/style/global.styled';
 
-function App() {
+const App = (): JSX.Element => {
     const router = createBrowserRouter([
         {
             path: '/',
@@ -27,6 +27,6 @@ function App() {
             <RouterProvider router={router} />
         </>
     );
-}
+};
 
 export default App;

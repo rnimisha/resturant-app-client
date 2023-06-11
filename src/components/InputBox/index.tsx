@@ -9,7 +9,7 @@ interface PropsType {
     touched: boolean | undefined;
 }
 
-function InputBox({ err, touched, ...props }: PropsType) {
+const InputBox = ({ err, touched, ...props }: PropsType): JSX.Element => {
     return (
         <Box
             sx={{
@@ -22,6 +22,6 @@ function InputBox({ err, touched, ...props }: PropsType) {
             {err && touched ? <Error>{err} </Error> : null}
         </Box>
     );
-}
+};
 
 export default InputBox;

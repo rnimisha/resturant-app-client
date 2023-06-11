@@ -4,11 +4,12 @@
         "es2021": true
     },
     "extends": [
-        "airbnb",
-        "airbnb/hooks",
         "plugin:react/recommended",
         "standard-with-typescript",
-        "prettier"
+        "prettier",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript"
     ],
     "overrides": [],
     "parserOptions": {
@@ -17,5 +18,14 @@
         "project": "./tsconfig.json"
     },
     "plugins": ["react"],
-    "rules": {}
+    "rules": {
+        "react/jsx-filename-extension": [
+            2,
+            { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+        ],
+        "import/no-named-as-default": 0,
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/prefer-nullish-coalescing": 0
+    }
 }
