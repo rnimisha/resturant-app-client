@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
+import { Container } from '@mui/material';
 
 export const FormStyled = styled(Form)`
     width: 80%;
@@ -18,5 +19,15 @@ export const FormStyled = styled(Form)`
     @media (max-width: 980px) {
         width: 90%;
         margin-left: 5%;
+    }
+`;
+
+export const MainContainer = styled(Container)`
+    && {
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 `;

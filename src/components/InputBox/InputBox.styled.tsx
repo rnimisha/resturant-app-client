@@ -9,7 +9,10 @@ export const TextBox = styled(Field)`
     justify-content: center;
     align-items: center;
     border: 0;
-    border-bottom: 2px solid ${COLOR.primary};
+    border-bottom: ${(props) =>
+        props.err && props.touched
+            ? `2px solid ${COLOR.error}`
+            : `2px solid ${COLOR.primary}`};
     outline: 0;
     padding-top: 7px;
     background: transparent;

@@ -9,7 +9,7 @@ interface PropsType {
     touched: boolean | undefined;
 }
 
-const InputBox = ({ err, touched, ...props }: PropsType): JSX.Element => {
+const InputBox = ({ ...props }: PropsType): JSX.Element => {
     return (
         <Box
             sx={{
@@ -19,7 +19,7 @@ const InputBox = ({ err, touched, ...props }: PropsType): JSX.Element => {
             }}
         >
             <TextBox {...props} />
-            {err && touched ? <Error>{err} </Error> : null}
+            {props.err && props.touched ? <Error>{props.err} </Error> : null}
         </Box>
     );
 };

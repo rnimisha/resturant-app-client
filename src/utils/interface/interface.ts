@@ -36,3 +36,13 @@ export interface userError {
     phone?: string,
     password?: string
 }
+
+export interface RegisterUser{
+    email: string 
+    name: string
+    role: 'C' | 'A' ,
+    address: string
+    phone: string,
+    password: string,
+    confirmpass?: string
+}

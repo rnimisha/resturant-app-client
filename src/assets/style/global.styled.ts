@@ -19,6 +19,18 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
+  .links{
+    color: ${COLOR.primary};
+    font-weight: 600;
+  }
+
+  .centered{
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export default GlobalStyles;

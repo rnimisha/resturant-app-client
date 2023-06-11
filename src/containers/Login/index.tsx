@@ -1,16 +1,17 @@
-import { Container } from '@mui/material';
 import { Formik, type FormikHelpers } from 'formik';
 import { type ErrorResponse, type User } from '../../utils/interface/interface';
 import { useAppDispatch } from '../../app/hook';
 import { loginUser } from '../../features/userSlice';
 import { extractError } from '../../utils/common';
 import InputBox from '../../components/InputBox';
-import { FormStyled } from './login.styled';
+import { FormStyled, MainContainer } from './login.styled';
 import Heading from '../../components/Heading';
 import AppButton from '../../components/AppButton';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = (): JSX.Element => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (
         values: User,
@@ -20,12 +21,12 @@ const Login = (): JSX.Element => {
 
         try {
             await dispatch(loginUser({ email, password }));
+            navigate('/');
         } catch (error) {
             const err = JSON.parse((error as Error).message) as ErrorResponse;
             if (err.fieldError != null) {
                 const errs = extractError(err.fieldError);
                 actions.setErrors(errs);
-                console.log(errs);
             } else {
                 alert(err.msg);
             }
@@ -38,15 +39,7 @@ const Login = (): JSX.Element => {
     };
 
     return (
-        <Container
-            sx={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
+        <MainContainer>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ errors, touched }) => (
                     <FormStyled>
@@ -65,10 +58,16 @@ const Login = (): JSX.Element => {
                             touched={touched.password}
                         />
                         <AppButton type="submit" text="Login" />
+                        <span>
+                            New user?
+                            <Link to="/register">
+                                <span className="links"> Register here</span>
+                            </Link>
+                        </span>
                     </FormStyled>
                 )}
             </Formik>
-        </Container>
+        </MainContainer>
     );
 };
 

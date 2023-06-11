@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { type User } from '../utils/interface/interface';
-import { loginUsers } from '../services/auth.services';
+import {  type User } from '../utils/interface/interface';
+import { loginUsers} from '../services/auth.services';
 
 export interface UserInterface {
     user_id: number | null;
@@ -27,6 +27,8 @@ export const loginUser = createAsyncThunk(
         return response.data ;
     }
 );
+
+
 
 export const userSlice = createSlice({
     name: 'user',

@@ -5,7 +5,8 @@ export const MainContainer = styled(Container)`
     justify-content: center;
     align-items: center;
     flex: 1;
-    display: 'flex';
+    display: flex;
+    flex-direction: column;
     margin-top: 10px;
 `;
 
@@ -15,4 +16,11 @@ export const Item = styled.div`
     width: 100%;
     text-align: center;
     margin-bottom: 10px;
+`;
+
+export const Row = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
 `;
