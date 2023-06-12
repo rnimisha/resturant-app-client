@@ -35,7 +35,13 @@ const Cart = (): JSX.Element => {
             <span>Total Products : {products.length}</span>
             <div>
                 {products.map((item, index) => {
-                    return <IndividualCart key={index} item={item} />;
+                    return (
+                        <IndividualCart
+                            key={index}
+                            item={item}
+                            fetchProducts={fetchProducts}
+                        />
+                    );
                 })}
             </div>
             <BtnContainer>

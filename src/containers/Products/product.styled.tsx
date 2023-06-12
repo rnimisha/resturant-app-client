@@ -55,11 +55,23 @@ export const SingleContainer = styled.div`
     margin-left: 10%;
     margin-top: 40px;
     justify-content: space-between;
+    @media (max-width: 980px) {
+        width: 90%;
+        margin-left: 5%;
+    }
+    @media (max-width: 680px) {
+       flex-direction: column;
+    }
 `
 
 export const ImageSide = styled.div`
     width: 49%;
     min-height: 300px;
+
+    @media (max-width: 680px) {
+        width: 100%;
+        min-height: 100px;
+    }
 
 `
 
@@ -70,6 +82,9 @@ export const InfoSide = styled.div`
     gap: 0.3rem;
     margin-top: 10px;
     justify-content: space-evenly;
+    @media (max-width: 680px) {
+        width: 100%;
+    }
 `
 export const PriceDetail = styled.h3`
     font-size: 1.8rem;

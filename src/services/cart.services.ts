@@ -33,3 +33,20 @@ export const addToCart = async (data: CartItem): Promise<AxiosResponse<CartItem>
         throw new Error(JSON.stringify(err))
     }
 }
+
+
+export const updateCart = async( cart_id: number , cart_prod_quantity: number ) : Promise<AxiosResponse<CartItem>> =>{
+
+    try{
+        const response = await api.put(APIROUTES.CART, {
+            cart_id,  cart_prod_quantity
+        })
+
+        console.log(response)
+        return response.data
+
+    }catch(error){
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err))
+    }
+}

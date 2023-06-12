@@ -28,7 +28,15 @@ export const postToCart = createAsyncThunk(
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers: {},
+    reducers: {
+        updateQuantity: (state, action )=>{
+            const findAndReplace = state.products.find(item => item.cart_id === action.payload.cart_id)
+            if(findAndReplace){
+                findAndReplace.cart_prod_quantity = action.payload.quantity
+            }
+            console.log(state)
+        }
+    },
     extraReducers: (builder) =>{
         builder
             .addCase(fetchCartProducts.fulfilled, (state,action) =>{
@@ -49,4 +57,5 @@ export const cartSlice = createSlice({
     }
 })
 
+export const {updateQuantity} = cartSlice.actions
 export default cartSlice.reducer
