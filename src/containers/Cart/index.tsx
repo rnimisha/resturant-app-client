@@ -3,6 +3,7 @@ import withAuth from '../../hoc/withAuth';
 import useUserRole from '../../hooks/useUserRole';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { fetchCartProducts } from '../../features/cartSlice';
+import { toast } from 'react-toastify';
 
 const Cart = (): JSX.Element => {
     useUserRole({ rolesPermitted: ['C'] });
@@ -18,8 +19,8 @@ const Cart = (): JSX.Element => {
 
     useEffect(() => {
         fetchProducts().catch((error) => {
-            // --- todo
             console.log(error);
+            toast.error('Unexpected Error');
         });
     }, []);
 

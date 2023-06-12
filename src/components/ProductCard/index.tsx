@@ -1,5 +1,6 @@
 import { type MouseEvent } from 'react';
 import {
+    type ErrorResponse,
     type CartItem,
     type ProductType,
 } from '../../utils/interface/interface';
@@ -18,6 +19,7 @@ import Heading from '../Heading';
 
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import useCart from '../../hooks/useCart';
+import { toast } from 'react-toastify';
 
 const ProductCard = (props: ProductType): JSX.Element => {
     const { addToCart } = useCart();
@@ -33,12 +35,14 @@ const ProductCard = (props: ProductType): JSX.Element => {
             cart_prod_quantity: 1,
         };
         addToCart(cartItem)
-            .then(() => {
-                // --todo
-                alert('done');
+            .then((data) => {
+                data && toast.success('Added to cart');
             })
             .catch((error) => {
-                console.log(error);
+                const err = JSON.parse(
+                    (error as Error).message
+                ) as ErrorResponse;
+                toast.info(err.msg);
             });
     };
 

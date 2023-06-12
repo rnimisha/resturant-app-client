@@ -9,6 +9,9 @@ import Register from './containers/Register';
 
 import GlobalStyles from './assets/style/global.styled';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const App = (): JSX.Element => {
     const router = createBrowserRouter([
         {
@@ -29,6 +32,11 @@ const App = (): JSX.Element => {
         <>
             <GlobalStyles />
             <RouterProvider router={router} />
+            <ToastContainer
+                autoClose={4000}
+                theme="colored"
+                style={{ marginTop: '40px' }}
+            />
         </>
     );
 };
