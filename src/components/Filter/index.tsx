@@ -4,24 +4,29 @@ import {
     type CheckedCategories,
     type CategoryItem,
 } from '../../utils/interface/interface';
+import { MainContainer, Title } from './filter.styled';
 import {
-    MainContainer,
-    StyledSlider,
-    StyledThumb,
-    StyledTrack,
-    Title,
-} from './filter.styled';
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import ReactSlider from 'react-slider';
+    Box,
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    Slider,
+} from '@mui/material';
 
 interface PropsType {
     handleCheckBox: (id: number, name: string) => void;
     selectedCategories: CheckedCategories;
+    handlePriceChange: (min: number, max: number) => void;
+    value: number[];
+    maximum: number;
 }
 
 const Filter = ({
     handleCheckBox,
     selectedCategories,
+    handlePriceChange,
+    value,
+    maximum,
 }: PropsType): JSX.Element => {
     const [categories, setCategories] = useState<CategoryItem[]>([]);
     const fetchCategory = async (): Promise<void> => {
@@ -36,30 +41,24 @@ const Filter = ({
         });
     }, []);
 
-    const Thumb = (
-        props: React.ComponentProps<any>,
-        state: any
-    ): JSX.Element => <StyledThumb {...props}>{state.valueNow}</StyledThumb>;
-
-    const Track = (
-        props: React.ComponentProps<any>,
-        state: any
-    ): JSX.Element => <StyledTrack {...props} index={state.index} />;
-
     return (
         <MainContainer>
             <div>
                 <Title>Price Filter</Title>
-                <div>
-                    <StyledSlider
-                        defaultValue={[0, 100]}
-                        renderThumb={Thumb}
-                        renderTrack={Track}
-                        pearling
-                        minDistance={10}
-                    ></StyledSlider>
-                    <ReactSlider />
-                </div>
+                <Box sx={{ width: '90%' }}>
+                    <Slider
+                        getAriaLabel={() => 'Temperature range'}
+                        value={value}
+                        max={maximum}
+                        onChange={(_, value) => {
+                            const val = value as number[];
+                            handlePriceChange(val[0], val[1]);
+                        }}
+                        valueLabelDisplay="auto"
+                        // getAriaValueText={}
+                        color="secondary"
+                    />
+                </Box>
             </div>
             <div>
                 <Title>Category</Title>

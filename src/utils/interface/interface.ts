@@ -53,7 +53,7 @@ export interface ProductType {
     quantity?: number,
     minPrice?: number,
     maxPrice?: number,
-    category_id?: number,
+    category_id?: number | number[],
     price?: number,
     unit?: string,
     page?: number,

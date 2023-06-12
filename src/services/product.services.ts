@@ -8,10 +8,34 @@ import { getErrorResponse } from "../utils/common";
 export const getProducts = async (filter: ProductType): Promise<AxiosResponse<ProductType[]>> =>{
 
     try{
-        const page = filter.page || 1
-        const response = await api.get(`${APIROUTES.PRODUCTS}?page=${page}`)
+        const page = filter.page  || 1 
+
+        let endpoint = `${APIROUTES.PRODUCTS}?page=${page}`
+
+        endpoint = filter.minPrice ? `${endpoint}&minPrice=${filter.minPrice}` : endpoint
+        endpoint = filter.maxPrice ? `${endpoint}&maxPrice=${filter.maxPrice}` : endpoint
+
+        const categories = filter.category_id as number[]
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        endpoint = categories.length > 0 ? `${endpoint}&categories=${categories}` : endpoint
+
+        console.log(endpoint)
+        const response = await api.get(endpoint)
         return response.data
     
+    }catch(error)
+    {
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err));
+    }
+
+}
+
+export const getMinMaxPrice = async (): Promise<AxiosResponse<{minPrice: number, maxPrice:number}>> =>{
+
+    try{
+        const resp = await api.get(`${APIROUTES.PRODUCTS}/minmaxprice`)
+        return resp.data
     }catch(error)
     {
         const err = getErrorResponse(error as AxiosError)
