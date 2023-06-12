@@ -1,20 +1,23 @@
+import { useEffect, useMemo, useState } from 'react';
+import { throttle } from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useEffect, useMemo, useState } from 'react';
-import { getMinMaxPrice, getProducts } from '../../services/product.services';
 import {
     type CheckedCategories,
     type ProductType,
 } from '../../utils/interface/interface';
-import ProductCard from '../../components/ProductCard';
+
 import {
     AllProducts,
     FilterContainer,
     MainContainer,
     ProductContainer,
 } from './product.styled';
+
+import { getMinMaxPrice, getProducts } from '../../services/product.services';
+import ProductCard from '../../components/ProductCard';
 import Filter from '../../components/Filter';
-import { throttle } from 'lodash';
+import Loader from '../../components/Loader';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -26,6 +29,7 @@ const Product = (): JSX.Element => {
     const [maximum, setMaximum] = useState<number>(200);
     const [selectedCategories, setSelectedCategories] =
         useState<CheckedCategories>({});
+    const [loading, setLoading] = useState<boolean>(false);
 
     // --------- categories filter
     const handleCheckBox = (id: number, name: string): void => {
@@ -92,14 +96,19 @@ const Product = (): JSX.Element => {
         if (initialLoad) {
             setInitialLoad(false);
         } else {
-            fetchProducts().catch((error) => {
-                console.log(error);
-            });
+            fetchProducts()
+                .then(() => {
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     }, [page, initialLoad, minMaxValue, selectedCategories]);
 
     // ---------- change min max price
     useEffect(() => {
+        setLoading(true);
         throttleHandleMinMax();
     }, [priceValue]);
 
@@ -120,17 +129,14 @@ const Product = (): JSX.Element => {
                     maximum={maximum}
                 />
             </FilterContainer>
+
             <AllProducts>
+                {loading && <Loader />}
                 <InfiniteScroll
                     dataLength={products.length}
                     next={fetchProducts}
                     hasMore={hasMore}
-                    loader={<h2>loading......</h2>}
-                    endMessage={
-                        <p style={{ textAlign: 'center' }}>
-                            <b>Yay! You have seen it all</b>
-                        </p>
-                    }
+                    loader={<Loader />}
                 >
                     <ProductContainer>
                         {products.map((item, index) => (
@@ -146,6 +152,7 @@ const Product = (): JSX.Element => {
                         ))}
                     </ProductContainer>
                 </InfiniteScroll>
+                )
             </AllProducts>
         </MainContainer>
     );
