@@ -64,9 +64,9 @@ export interface CartItem {
     cart_id? : number,
     product_id: number,
     cart_prod_quantity: number,
-    user_id: number,
-    price: number,
-    name: string,
+    user_id?: number,
+    price?: number,
+    name?: string,
     prod_quantity?: number
 }
 

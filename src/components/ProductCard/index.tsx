@@ -1,5 +1,8 @@
 import { type MouseEvent } from 'react';
-import { type ProductType } from '../../utils/interface/interface';
+import {
+    type CartItem,
+    type ProductType,
+} from '../../utils/interface/interface';
 import {
     Card,
     ImageContainer,
@@ -14,12 +17,31 @@ import IMG from '../../assets/image/test.jpeg';
 import Heading from '../Heading';
 
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import useCart from '../../hooks/useCart';
 
 const ProductCard = (props: ProductType): JSX.Element => {
-    const handleAddToCart = (event: MouseEvent<HTMLButtonElement>): void => {
+    const { addToCart } = useCart();
+
+    const handleAddToCart = (
+        event: MouseEvent<HTMLButtonElement>,
+        productId: number
+    ): void => {
         event.stopPropagation();
-        alert('add to cart');
+
+        const cartItem: CartItem = {
+            product_id: productId,
+            cart_prod_quantity: 1,
+        };
+        addToCart(cartItem)
+            .then(() => {
+                // --todo
+                alert('done');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
+
     return (
         <Card
             onClick={() => {
@@ -41,7 +63,9 @@ const ProductCard = (props: ProductType): JSX.Element => {
                 <RightInfo>
                     <CartBtn
                         onClick={(event) => {
-                            handleAddToCart(event);
+                            if (props.product_id) {
+                                handleAddToCart(event, props.product_id);
+                            }
                         }}
                     >
                         <AddShoppingCartOutlinedIcon />
