@@ -19,7 +19,7 @@ export const getProducts = async (filter: ProductType): Promise<AxiosResponse<Pr
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         endpoint = categories.length > 0 ? `${endpoint}&categories=${categories}` : endpoint
 
-        console.log(endpoint)
+        console.log('call')
         const response = await api.get(endpoint)
         return response.data
     

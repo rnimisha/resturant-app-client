@@ -1,6 +1,6 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getMinMaxPrice, getProducts } from '../../services/product.services';
 import {
     type CheckedCategories,
@@ -14,6 +14,7 @@ import {
     ProductContainer,
 } from './product.styled';
 import Filter from '../../components/Filter';
+import { throttle } from 'lodash';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -21,10 +22,12 @@ const Product = (): JSX.Element => {
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [initialLoad, setInitialLoad] = useState<boolean>(true);
     const [priceValue, setPriceValue] = useState<number[]>([0, 500]);
+    const [minMaxValue, setMinMaxValue] = useState<number[]>([0, 500]);
     const [maximum, setMaximum] = useState<number>(200);
     const [selectedCategories, setSelectedCategories] =
         useState<CheckedCategories>({});
 
+    // --------- categories filter
     const handleCheckBox = (id: number, name: string): void => {
         if (selectedCategories[id]) {
             const { [id]: removedCategory, ...remaining } = selectedCategories;
@@ -34,6 +37,7 @@ const Product = (): JSX.Element => {
         }
     };
 
+    // --------- get products
     const fetchProducts = async (): Promise<void> => {
         try {
             // await new Promise<void>((resolve) => setTimeout(resolve, 2000));
@@ -56,10 +60,21 @@ const Product = (): JSX.Element => {
         }
     };
 
+    //  --------- filter price
     const handlePriceChange = (min: number, max: number): void => {
         setPriceValue([min, max]);
     };
 
+    const handleMinMax = (): void => {
+        setMinMaxValue([priceValue[0], priceValue[1]]);
+    };
+
+    const throttleHandleMinMax = useMemo(
+        () => throttle(handleMinMax, 1000),
+        []
+    );
+
+    // ------- load minimum and maximum price at initial load
     useEffect(() => {
         getMinMaxPrice()
             .then((data) => {
@@ -72,6 +87,7 @@ const Product = (): JSX.Element => {
             });
     }, []);
 
+    // ------ apply filter
     useEffect(() => {
         if (initialLoad) {
             setInitialLoad(false);
@@ -80,12 +96,18 @@ const Product = (): JSX.Element => {
                 console.log(error);
             });
         }
-    }, [page, initialLoad, priceValue, selectedCategories]);
+    }, [page, initialLoad, minMaxValue, selectedCategories]);
 
+    // ---------- change min max price
+    useEffect(() => {
+        throttleHandleMinMax();
+    }, [priceValue]);
+
+    // ------- when filter is changed
     useEffect(() => {
         setProducts([]);
         setPage(1);
-    }, [priceValue, selectedCategories]);
+    }, [minMaxValue, selectedCategories]);
 
     return (
         <MainContainer>

@@ -4,14 +4,8 @@ import {
     type CheckedCategories,
     type CategoryItem,
 } from '../../utils/interface/interface';
-import { MainContainer, Title } from './filter.styled';
-import {
-    Box,
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
-    Slider,
-} from '@mui/material';
+import { MainContainer, PrettoSlider, Title } from './filter.styled';
+import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
 interface PropsType {
     handleCheckBox: (id: number, name: string) => void;
@@ -45,18 +39,17 @@ const Filter = ({
         <MainContainer>
             <div>
                 <Title>Price Filter</Title>
-                <Box sx={{ width: '90%' }}>
-                    <Slider
-                        getAriaLabel={() => 'Temperature range'}
+                <Box sx={{ width: '90%' }} mt={8}>
+                    <PrettoSlider
                         value={value}
                         max={maximum}
                         onChange={(_, value) => {
                             const val = value as number[];
                             handlePriceChange(val[0], val[1]);
                         }}
-                        valueLabelDisplay="auto"
-                        // getAriaValueText={}
+                        valueLabelDisplay="on"
                         color="secondary"
+                        aria-label="pretto slider"
                     />
                 </Box>
             </div>
