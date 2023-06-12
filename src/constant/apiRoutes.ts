@@ -3,6 +3,7 @@ const APIROUTES = {
     REGISTER: '/auth/register',
     PRODUCTS: '/products',
     CART: '/carts',
+    CATEGORY: '/categories',
 };
 
 export default APIROUTES;

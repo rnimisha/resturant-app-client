@@ -73,3 +73,12 @@ export interface CartItem {
 export interface Carts {
     products : CartItem[] | []
 }
+
+export interface CategoryItem{
+    category_id: number,
+    category_name: string,
+    image? : string
+}
+
+
+export type CheckedCategories = Record<number, string>;

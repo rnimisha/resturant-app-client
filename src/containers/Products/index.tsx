@@ -2,15 +2,36 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useEffect, useState } from 'react';
 import { getProducts } from '../../services/product.services';
-import { type ProductType } from '../../utils/interface/interface';
+import {
+    type CheckedCategories,
+    type ProductType,
+} from '../../utils/interface/interface';
 import ProductCard from '../../components/ProductCard';
-import { ProductContainer } from './product.styled';
+import {
+    AllProducts,
+    FilterContainer,
+    MainContainer,
+    ProductContainer,
+} from './product.styled';
+import Filter from '../../components/Filter';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [page, setPage] = useState<number>(1);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [initialLoad, setInitialLoad] = useState<boolean>(true);
+
+    const [selectedCategories, setSelectedCategories] =
+        useState<CheckedCategories>({});
+
+    const handleCheckBox = (id: number, name: string): void => {
+        if (selectedCategories[id]) {
+            const { [id]: removedCategory, ...remaining } = selectedCategories;
+            setSelectedCategories(remaining);
+        } else {
+            setSelectedCategories({ ...selectedCategories, [id]: 'd' });
+        }
+    };
 
     const fetchProducts = async (): Promise<void> => {
         try {
@@ -39,33 +60,41 @@ const Product = (): JSX.Element => {
     }, [page, initialLoad]);
 
     return (
-        <div>
-            <InfiniteScroll
-                dataLength={products.length}
-                next={fetchProducts}
-                hasMore={hasMore}
-                loader={<h2>loading......</h2>}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b>Yay! You have seen it all</b>
-                    </p>
-                }
-            >
-                <ProductContainer>
-                    {products.map((item, index) => (
-                        <ProductCard
-                            key={index}
-                            name={item.name}
-                            product_id={item.product_id}
-                            quantity={item.quantity}
-                            price={item.price}
-                            unit={item.unit}
-                            category_id={item.category_id}
-                        />
-                    ))}
-                </ProductContainer>
-            </InfiniteScroll>
-        </div>
+        <MainContainer>
+            <FilterContainer>
+                <Filter
+                    handleCheckBox={handleCheckBox}
+                    selectedCategories={selectedCategories}
+                />
+            </FilterContainer>
+            <AllProducts>
+                <InfiniteScroll
+                    dataLength={products.length}
+                    next={fetchProducts}
+                    hasMore={hasMore}
+                    loader={<h2>loading......</h2>}
+                    endMessage={
+                        <p style={{ textAlign: 'center' }}>
+                            <b>Yay! You have seen it all</b>
+                        </p>
+                    }
+                >
+                    <ProductContainer>
+                        {products.map((item, index) => (
+                            <ProductCard
+                                key={index}
+                                name={item.name}
+                                product_id={item.product_id}
+                                quantity={item.quantity}
+                                price={item.price}
+                                unit={item.unit}
+                                category_id={item.category_id}
+                            />
+                        ))}
+                    </ProductContainer>
+                </InfiniteScroll>
+            </AllProducts>
+        </MainContainer>
     );
 };
 

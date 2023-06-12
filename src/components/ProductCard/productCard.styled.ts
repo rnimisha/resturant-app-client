@@ -3,7 +3,7 @@ import COLOR from "../../constant/color";
 
 export const Card = styled.div`
     width: 28%;
-    min-height: 450px;
+    /* min-height: 450px; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,12 +18,27 @@ export const Card = styled.div`
         cursor: pointer;
     }
 
+    @media (max-width: 1280px) {
+        width: 46%;
+    }
+
+    @media (max-width: 800px) {
+        width: 90%;
+    }
+
+    @media (max-width: 500px) {
+       padding: 10px;
+    }
+
 `
 
 export const ImageContainer = styled.div`
     width: 80%;
-    height: 300px;
     margin-top: 20px;
+
+    @media (max-width: 500px) {
+        width: 99%;
+    }
 `
 
 export const Image = styled.img`
@@ -36,6 +51,9 @@ export const Information = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+     @media (max-width: 500px) {
+        width: 99%;
+    }
 `
 
 export const LeftInfo = styled.div`
