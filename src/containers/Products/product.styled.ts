@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import COLOR from "../../constant/color";
+import { Button } from "@mui/material";
 
 export const ProductContainer = styled.div`
     display: flex;
@@ -47,3 +48,45 @@ export const AllProducts = styled.div`
         width: 100%;
     }
 `
+
+export const SingleContainer = styled.div`
+    display: flex;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 40px;
+    justify-content: space-between;
+`
+
+export const ImageSide = styled.div`
+    width: 49%;
+    min-height: 300px;
+
+`
+
+export const InfoSide = styled.div`
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 10px;
+    justify-content: space-evenly;
+`
+export const PriceDetail = styled.h3`
+    font-size: 1.8rem;
+    font-weight: 600;
+    
+`
+export const Image = styled.img`
+    max-width: 90%;
+`
+
+export const StyledBtn = styled(Button)`
+    && {
+        color: ${COLOR.primary};
+        font-weight: 600;
+        border: 1.5px solid ${COLOR.primary};
+    }
+    
+
+`
+

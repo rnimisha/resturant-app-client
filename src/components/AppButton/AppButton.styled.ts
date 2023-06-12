@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import COLOR from '../../constant/color.ts';
 
 export const ButtonStyled = styled.button<{ error: boolean }>`
-    padding: 20px 10px;
+    padding: 15px 10px;
     border-radius: 15px;
     background-color: ${(props) => props.error ? COLOR.error :  COLOR.primary};
     color: ${COLOR.black};

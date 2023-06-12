@@ -11,6 +11,7 @@ import GlobalStyles from './assets/style/global.styled';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SingleProduct from './containers/Products/SingleProduct';
 
 const App = (): JSX.Element => {
     const router = createBrowserRouter([
@@ -20,6 +21,7 @@ const App = (): JSX.Element => {
             children: [
                 { path: '/', element: <Home /> },
                 { path: '/products', element: <Products /> },
+                { path: '/products/:id', element: <SingleProduct /> },
                 { path: '/login', element: <Login /> },
                 { path: '/register', element: <Register /> },
                 { path: '/cart', element: <Cart /> },

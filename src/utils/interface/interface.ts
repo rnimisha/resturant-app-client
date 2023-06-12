@@ -57,6 +57,7 @@ export interface ProductType {
     price?: number,
     unit?: string,
     page?: number,
+    description?: string,
     images?: string[]
 }
 

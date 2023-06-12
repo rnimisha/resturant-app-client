@@ -43,3 +43,16 @@ export const getMinMaxPrice = async (): Promise<AxiosResponse<{minPrice: number,
     }
 
 }
+
+export const getProductById = async (id: number): Promise<AxiosResponse<ProductType>> =>{
+    
+    try{
+        const resp = await api.get(`${APIROUTES.PRODUCTS}/${id}`)
+        return resp.data
+
+    }catch(error){
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err));
+    }
+    
+}

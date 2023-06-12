@@ -20,9 +20,11 @@ import Heading from '../Heading';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import useCart from '../../hooks/useCart';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props: ProductType): JSX.Element => {
     const { addToCart } = useCart();
+    const navigate = useNavigate();
 
     const handleAddToCart = (
         event: MouseEvent<HTMLButtonElement>,
@@ -49,7 +51,8 @@ const ProductCard = (props: ProductType): JSX.Element => {
     return (
         <Card
             onClick={() => {
-                alert('navigate to product page');
+                const id = props.product_id as number;
+                navigate(`/products/${id}`);
             }}
         >
             <ImageContainer>
