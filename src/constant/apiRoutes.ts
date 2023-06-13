@@ -4,6 +4,7 @@ const APIROUTES = {
     PRODUCTS: '/products',
     CART: '/carts',
     CATEGORY: '/categories',
+    ORDER: '/orders',
 };
 
 export default APIROUTES;

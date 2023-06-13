@@ -6,6 +6,7 @@ import Products from './containers/Products';
 import Cart from './containers/Cart';
 import Logout from './containers/Logout';
 import Register from './containers/Register';
+import Order from './containers/Order';
 
 import GlobalStyles from './assets/style/global.styled';
 
@@ -26,6 +27,7 @@ const App = (): JSX.Element => {
                 { path: '/register', element: <Register /> },
                 { path: '/cart', element: <Cart /> },
                 { path: '/logout', element: <Logout /> },
+                { path: '/orders/:id', element: <Order /> },
             ],
         },
     ]);

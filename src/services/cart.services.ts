@@ -62,3 +62,15 @@ export const deleteCartProduct = async( cart_id: number, user_id: number) : Prom
         throw new Error(JSON.stringify(err))
     }
 }
+
+export const deleteAllCartProduct = async( user_id: number) : Promise<AxiosResponse<boolean>> =>{
+    try{
+        const response = await api.delete(`${APIROUTES.CART}/all`, {data: { user_id}})
+
+        return response.data
+
+    }catch(error){
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err))
+    }
+}

@@ -2,14 +2,23 @@ import { useEffect, useState } from 'react';
 import withAuth from '../../hoc/withAuth';
 import useUserRole from '../../hooks/useUserRole';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
-import { fetchCartProducts } from '../../features/cartSlice';
+import {
+    deleteAllCartProducts,
+    fetchCartProducts,
+} from '../../features/cartSlice';
 import { toast } from 'react-toastify';
 import { BtnContainer, Container } from './cart.styled';
 import Heading from '../../components/Heading';
 import IndividualCart from './IndividualCart';
 import AppButton from '../../components/AppButton';
-import { type CartItem } from '../../utils/interface/interface';
+import {
+    type Products,
+    type CartItem,
+    type OrderType,
+} from '../../utils/interface/interface';
 import { PriceDetail } from '../Products/product.styled';
+import { placeOrder } from '../../services/order.services';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = (): JSX.Element => {
     useUserRole({ rolesPermitted: ['C'] });
@@ -18,6 +27,8 @@ const Cart = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const { user_id } = useAppSelector((state) => state.user);
     const { products } = useAppSelector((state) => state.cart);
+
+    const navigate = useNavigate();
 
     const calcTotal = (): void => {
         const prod = products as CartItem[];
@@ -35,6 +46,40 @@ const Cart = (): JSX.Element => {
         if (user_id) {
             await dispatch(fetchCartProducts(user_id));
         }
+    };
+
+    const handlePlaceOrder = (): void => {
+        const prod = products as CartItem[];
+
+        const orderProducts: Products[] = prod.map((item) => {
+            return {
+                product_id: item.product_id,
+                quantity: item.cart_prod_quantity,
+            };
+        });
+
+        const data: OrderType = {
+            user_id: Number(user_id),
+            order_status: 'Order Received',
+            payment_method: 'COD',
+            paid: 'F',
+            products: orderProducts,
+        };
+
+        placeOrder(data)
+            .then((resp) => {
+                const id = Number(user_id);
+                dispatch(deleteAllCartProducts({ user_id: id })).catch(
+                    (err) => {
+                        alert(err);
+                    }
+                );
+
+                navigate(`/orders/${resp.data.order_id}`);
+            })
+            .catch((err) => {
+                alert(err);
+            });
     };
 
     useEffect(() => {
@@ -73,7 +118,12 @@ const Cart = (): JSX.Element => {
                     <BtnContainer>
                         <PriceDetail>TOTAL: RS.{total}</PriceDetail>
 
-                        <AppButton text="Checkout" />
+                        <AppButton
+                            text="Checkout"
+                            action={() => {
+                                handlePlaceOrder();
+                            }}
+                        />
                     </BtnContainer>
                 </>
             )}

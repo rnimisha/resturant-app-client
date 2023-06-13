@@ -81,5 +81,22 @@ export interface CategoryItem{
     image? : string
 }
 
+export interface Products {
+    product_id: number
+    quantity: number
+    price?: number
+    name?: string
+}
+
+export interface OrderType {
+    order_id?: number
+    user_id: number
+    order_date?: string 
+    order_status: string 
+    payment_method: string
+    paid: 'F' | 'T'
+    products?: Products[]
+}
+
 
 export type CheckedCategories = Record<number, string>;
