@@ -1,7 +1,7 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { type CartItem, type Carts } from "../utils/interface/interface"
-import { addToCart, getCartProducts } from "../services/cart.services"
+import { addToCart, deleteCartProduct, getCartProducts } from "../services/cart.services"
 
 
 
@@ -22,6 +22,14 @@ export const postToCart = createAsyncThunk(
     async(data: CartItem) => {
         const response = await addToCart(data)
         return response.data
+    }
+)
+
+export const deleteCartOneProduct = createAsyncThunk(
+    'cart/delete',
+    async(data: {cart_id: number, user_id: number}) =>{
+        const response = await deleteCartProduct(data.cart_id, data.user_id)
+        return {data: response.data, id: data.cart_id}
     }
 )
 
@@ -52,6 +60,15 @@ export const cartSlice = createSlice({
                 state.products = [newCartItem, ...state.products]
             })
             .addCase(postToCart.rejected, (_, action)=>{
+                throw new Error(action.error.message)
+            })
+            .addCase(deleteCartOneProduct.fulfilled, (state,action) =>{
+                const newCart = state.products.filter((item)=>{
+                    return item.cart_id !== action.payload.id
+                })
+                state.products = newCart
+            })
+            .addCase(deleteCartOneProduct.rejected, (_, action)=>{
                 throw new Error(action.error.message)
             })
     }

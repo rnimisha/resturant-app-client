@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import { Individual, Item } from './cart.styled';
+import { DeleteIcon, Individual, Item, ItemCentered } from './cart.styled';
 import Heading from '../../components/Heading';
 import { type CartItem } from '../../utils/interface/interface';
 import { quantityReducer } from '../../utils/counter';
@@ -8,12 +8,17 @@ import Counter from '../../components/Counter';
 import { updateCart } from '../../services/cart.services';
 import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
+import { deleteCartOneProduct } from '../../features/cartSlice';
+
 interface PropsType {
     item: CartItem;
     fetchProducts: () => Promise<void>;
 }
 
 const IndividualCart = ({ item, fetchProducts }: PropsType): JSX.Element => {
+    const appDispatch = useAppDispatch();
+    const { user_id } = useAppSelector((state) => state.user);
     const [quantity, dispatch] = useReducer(
         quantityReducer,
         item.cart_prod_quantity
@@ -25,9 +30,23 @@ const IndividualCart = ({ item, fetchProducts }: PropsType): JSX.Element => {
         const id = Number(item.cart_id);
         if (quantity !== item.cart_prod_quantity) {
             await updateCart(id, quantity);
-
             await fetchProducts();
         }
+    };
+
+    const handleDelete = (): void => {
+        const data = {
+            user_id: Number(user_id),
+            cart_id: Number(item.cart_id),
+        };
+        appDispatch(deleteCartOneProduct(data))
+            .then(() => {
+                toast.success('Product removed form cart');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error('Unexpected Error');
+            });
     };
 
     useEffect(() => {
@@ -45,15 +64,16 @@ const IndividualCart = ({ item, fetchProducts }: PropsType): JSX.Element => {
                     <b>Rs. {item.price} </b>/<i>item</i>
                 </span>
             </Item>
-            <Item
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
+            <ItemCentered>
                 <Counter quantity={quantity} dispatch={debouncedDispatch} />
-            </Item>
+            </ItemCentered>
+            <ItemCentered>
+                <DeleteIcon
+                    onClick={() => {
+                        handleDelete();
+                    }}
+                />
+            </ItemCentered>
             <Item>
                 <span>
                     <span style={{ fontWeight: 600 }}>Total :&nbsp;</span>

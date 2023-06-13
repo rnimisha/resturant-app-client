@@ -42,7 +42,19 @@ export const updateCart = async( cart_id: number , cart_prod_quantity: number ) 
             cart_id,  cart_prod_quantity
         })
 
-        console.log(response)
+        // console.log('debounce quantity')
+        return response.data
+
+    }catch(error){
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err))
+    }
+}
+
+export const deleteCartProduct = async( cart_id: number, user_id: number) : Promise<AxiosResponse<boolean>> =>{
+    try{
+        const response = await api.delete(APIROUTES.CART, {data: {cart_id, user_id}})
+
         return response.data
 
     }catch(error){
