@@ -1,4 +1,5 @@
 import { type AxiosError } from 'axios';
+
 import { type ErrorResponse, type FieldError, type userError } from './interface/interface';
 
 export const extractError = (error: FieldError[]): userError => {

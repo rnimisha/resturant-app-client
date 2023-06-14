@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Box, Toolbar } from '@mui/material';
 import Navbar from '../components/Navbar';
 
-function Root() {
+const Root = (): JSX.Element => {
     return (
         <>
             <Navbar />
@@ -20,6 +20,6 @@ function Root() {
             </Box>
         </>
     );
-}
+};
 
 export default Root;

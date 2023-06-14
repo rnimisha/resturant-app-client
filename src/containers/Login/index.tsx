@@ -1,6 +1,6 @@
 import { Formik, type FormikHelpers } from 'formik';
 import { type ErrorResponse, type User } from '../../utils/interface/interface';
-import { useAppDispatch } from '../../app/hook';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { loginUser } from '../../features/userSlice';
 import { extractError } from '../../utils/common';
 import InputBox from '../../components/InputBox';
@@ -10,10 +10,18 @@ import AppButton from '../../components/AppButton';
 import { Link, useNavigate } from 'react-router-dom';
 import LOGIN_VALIDATION_SCHEMA from '../../validation/LOGIN_VALIDATION_SCHEMA';
 import { Box } from '@mui/material';
+import { useEffect } from 'react';
 
 const Login = (): JSX.Element => {
+    const { role } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (role) {
+            role === 'A' ? navigate('/admin') : navigate('/');
+        }
+    }, [role, navigate]);
 
     const handleSubmit = async (
         values: User,
@@ -23,7 +31,6 @@ const Login = (): JSX.Element => {
 
         try {
             await dispatch(loginUser({ email, password }));
-            navigate('/');
         } catch (error) {
             const err = JSON.parse((error as Error).message) as ErrorResponse;
             if (err.fieldError != null) {

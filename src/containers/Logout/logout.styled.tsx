@@ -8,6 +8,7 @@ export const MainContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     margin-top: 10px;
+    min-height: 100vh;
 `;
 
 export const Item = styled.div`

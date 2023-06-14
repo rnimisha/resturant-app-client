@@ -1,20 +1,25 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import Home from './containers/Home';
+import { initialOptions } from './constant/paypal';
+
 import Root from './routes/Root';
+import AdminRoot from './routes/AdminRoot';
+
+import Home from './containers/Home';
 import Login from './containers/Login';
 import Products from './containers/Products';
 import Cart from './containers/Cart';
 import Logout from './containers/Logout';
 import Register from './containers/Register';
 import Order from './containers/Order';
+import Dashboard from './containers/Admin/Dashboard';
+import SingleProduct from './containers/Products/SingleProduct';
+import Orders from './containers/Admin/Orders';
 
 import GlobalStyles from './assets/style/global.styled';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SingleProduct from './containers/Products/SingleProduct';
-import { initialOptions } from './constant/paypal';
 
 const App = (): JSX.Element => {
     const router = createBrowserRouter([
@@ -22,16 +27,25 @@ const App = (): JSX.Element => {
             path: '/',
             element: <Root />,
             children: [
-                { path: '/', element: <Home /> },
-                { path: '/products', element: <Products /> },
-                { path: '/products/:id', element: <SingleProduct /> },
-                { path: '/login', element: <Login /> },
-                { path: '/register', element: <Register /> },
-                { path: '/cart', element: <Cart /> },
-                { path: '/logout', element: <Logout /> },
-                { path: '/orders/:id', element: <Order /> },
+                { path: '', element: <Home /> },
+                { path: 'products', element: <Products /> },
+                { path: 'products/:id', element: <SingleProduct /> },
+                { path: 'cart', element: <Cart /> },
+                { path: 'orders/:id', element: <Order /> },
             ],
         },
+        {
+            path: 'admin',
+            element: <AdminRoot />,
+            children: [
+                { path: '', element: <Dashboard /> },
+                { path: 'orders', element: <Orders /> },
+                { path: 'products', element: <Orders /> },
+            ],
+        },
+        { path: 'login', element: <Login /> },
+        { path: 'register', element: <Register /> },
+        { path: 'logout', element: <Logout /> },
     ]);
 
     return (
