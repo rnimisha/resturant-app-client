@@ -15,6 +15,7 @@ import Order from './containers/Order';
 import Dashboard from './containers/Admin/Dashboard';
 import SingleProduct from './containers/Products/SingleProduct';
 import Orders from './containers/Admin/Orders';
+import Product from './containers/Admin/Products';
 
 import GlobalStyles from './assets/style/global.styled';
 
@@ -40,7 +41,7 @@ const App = (): JSX.Element => {
             children: [
                 { path: '', element: <Dashboard /> },
                 { path: 'orders', element: <Orders /> },
-                { path: 'products', element: <Orders /> },
+                { path: 'products', element: <Product /> },
             ],
         },
         { path: 'login', element: <Login /> },

@@ -34,7 +34,7 @@ export interface userError {
     role?: string ,
     address?: string
     phone?: string,
-    password?: string
+    password?: string 
 }
 
 export interface RegisterUser{
@@ -59,6 +59,11 @@ export interface ProductType {
     page?: number,
     description?: string,
     images?: string[]
+}
+
+export interface ProductInfo {
+    product : ProductType[],
+    total: number
 }
 
 export interface CartItem {

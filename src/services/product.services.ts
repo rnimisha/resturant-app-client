@@ -1,11 +1,11 @@
 import { type AxiosError, type AxiosResponse } from "axios";
 import api from ".";
-import { type ProductType } from "../utils/interface/interface";
+import { type ProductInfo, type ProductType } from "../utils/interface/interface";
 import APIROUTES from "../constant/apiRoutes";
 import { getErrorResponse } from "../utils/common";
 
 
-export const getProducts = async (filter: ProductType): Promise<AxiosResponse<ProductType[]>> =>{
+export const getProducts = async (filter: ProductType): Promise<AxiosResponse<ProductInfo>> =>{
 
     try{
         const page = filter.page  || 1 
@@ -15,10 +15,12 @@ export const getProducts = async (filter: ProductType): Promise<AxiosResponse<Pr
         endpoint = filter.minPrice ? `${endpoint}&minPrice=${filter.minPrice}` : endpoint
         endpoint = filter.maxPrice ? `${endpoint}&maxPrice=${filter.maxPrice}` : endpoint
 
-        const categories = filter.category_id as number[]
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        endpoint = categories.length > 0 ? `${endpoint}&categories=${categories}` : endpoint
-
+        if(filter.category_id){
+            const categories = filter.category_id as number[]
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            endpoint = categories.length > 0 ? `${endpoint}&categories=${categories}` : endpoint
+        }
+        
         console.log('call')
         const response = await api.get(endpoint)
         return response.data

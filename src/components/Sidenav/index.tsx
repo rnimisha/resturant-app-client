@@ -156,7 +156,13 @@ const SideNav = (): JSX.Element => {
                 <NavList navlist={ADMIN_SIDE_NAV_SETTINGS} open={open} />
             </Drawer>
 
-            <Box component="main">
+            <Box
+                component="main"
+                sx={{
+                    width: '100%',
+                    minHeight: '95vh',
+                }}
+            >
                 <DrawerHeader />
                 <Outlet />
             </Box>

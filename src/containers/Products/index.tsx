@@ -53,8 +53,8 @@ const Product = (): JSX.Element => {
                 category_id: categories,
             });
 
-            if (response.data.length > 0) {
-                setProducts((prev) => [...prev, ...response.data]);
+            if (response.data.product.length > 0) {
+                setProducts((prev) => [...prev, ...response.data.product]);
                 setPage((prev) => prev + 1);
             } else {
                 setHasMore(false);
