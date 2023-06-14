@@ -58,3 +58,14 @@ export const getProductById = async (id: number): Promise<AxiosResponse<ProductT
     }
     
 }
+
+export const updateProduct = async (data: ProductType): Promise<AxiosResponse<ProductType>> =>{
+    try{
+        const resp = await api.put(APIROUTES.PRODUCTS , data)
+        return resp.data
+
+    }catch(error){
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err));
+    }
+}

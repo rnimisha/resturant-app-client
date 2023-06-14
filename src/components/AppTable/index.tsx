@@ -8,6 +8,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { type ProductType } from '../../utils/interface/interface';
 import { type Column } from '../../constant/columns';
+import COLOR from '../../constant/color';
+import { DeleteIcon, UpdateIcon } from '../../containers/Cart/cart.styled';
 
 interface PropsType {
     data: ProductType[];
@@ -15,6 +17,9 @@ interface PropsType {
     page: number;
     setPage: React.Dispatch<React.SetStateAction<number>>;
     columns: readonly Column[];
+    deleteAction?: (id: number) => void;
+    editAction?: (id: number) => Promise<void>;
+    id: 'product_id' | 'id';
 }
 const AppTable = ({
     data,
@@ -22,6 +27,9 @@ const AppTable = ({
     page,
     setPage,
     columns,
+    deleteAction,
+    editAction,
+    id,
 }: PropsType): JSX.Element => {
     const handleChangePage = (event: unknown, newPage: number): void => {
         setPage(newPage);
@@ -37,11 +45,22 @@ const AppTable = ({
                                 <TableCell
                                     key={index}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth }}
+                                    style={{
+                                        zIndex: 8000,
+                                        minWidth: column.minWidth,
+                                        backgroundColor: COLOR.lightPrimary,
+                                    }}
                                 >
                                     {column.label}
                                 </TableCell>
                             ))}
+                            <TableCell
+                                style={{
+                                    backgroundColor: COLOR.lightPrimary,
+                                }}
+                            >
+                                Actions
+                            </TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -59,12 +78,40 @@ const AppTable = ({
                                             <TableCell
                                                 key={index}
                                                 align={column.align}
+                                                sx={{ padding: '30px 15px' }}
                                             >
                                                 {row[column.id]}
                                             </TableCell>
                                         );
                                     })}
-                                    <TableCell>edit delete</TableCell>
+                                    <TableCell>
+                                        <UpdateIcon
+                                            onClick={() => {
+                                                if (editAction && id in row)
+                                                    editAction(
+                                                        Number(
+                                                            row[
+                                                                id as keyof typeof row
+                                                            ]
+                                                        )
+                                                    ).catch((err) => {
+                                                        console.log(err);
+                                                    });
+                                            }}
+                                        />
+                                        <DeleteIcon
+                                            onClick={() => {
+                                                if (deleteAction)
+                                                    deleteAction(
+                                                        Number(
+                                                            row[
+                                                                id as keyof typeof row
+                                                            ]
+                                                        )
+                                                    );
+                                            }}
+                                        />
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}

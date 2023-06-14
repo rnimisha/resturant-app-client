@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import COLOR from '../../constant/color';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
 export const Container = styled.div`
     width: 80%;
@@ -49,6 +50,16 @@ export const BtnContainer = styled.div`
 export const DeleteIcon = styled(DeleteOutlineOutlinedIcon)`
     font-size: 20px;
     color: ${COLOR.error};
+
+    &:hover {
+        scale: calc(1.1);
+        cursor: pointer;
+    }
+`;
+
+export const UpdateIcon = styled(ModeEditOutlineOutlinedIcon)`
+    font-size: 20px;
+    color: ${COLOR.secondary};
 
     &:hover {
         scale: calc(1.1);

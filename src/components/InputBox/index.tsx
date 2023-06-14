@@ -20,6 +20,7 @@ const InputBox = ({ ...props }: PropsType): JSX.Element => {
             }}
         >
             <TextBox {...props} />
+
             {props.err && props.touched ? <Error>{props.err} </Error> : null}
         </Box>
     );
