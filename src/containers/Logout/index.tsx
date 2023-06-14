@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hook';
-import AppButton from '../../components/AppButton';
 import { logout } from '../../features/userSlice';
-import { Item, MainContainer } from './logout.styled';
+import { MainContainer } from './logout.styled';
 import useUserRole from '../../hooks/useUserRole';
+import Confirmation from '../../components/Confirmation';
 
 const Logout = (): JSX.Element => {
     const dispatch = useAppDispatch();
@@ -15,15 +15,15 @@ const Logout = (): JSX.Element => {
         dispatch(logout({}));
         navigate('/');
     };
+
+    const cancelAction = (): void => {};
     return (
         <MainContainer>
-            <Item>Are you sure you want to logout? `</Item>
-            <Item>
-                <AppButton text="Yes" action={yesAction} />
-            </Item>
-            <Item>
-                <AppButton text="No" error={true} />
-            </Item>
+            <Confirmation
+                title="Are you sure you want to logout? "
+                yesAction={yesAction}
+                cancelAction={cancelAction}
+            />
         </MainContainer>
     );
 };

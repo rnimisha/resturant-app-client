@@ -7,14 +7,19 @@ import AppTable from '../../../components/AppTable';
 import Heading from '../../../components/Heading';
 import { type ProductType } from '../../../utils/interface/interface';
 import {
+    deleteProduct,
     getProductById,
     getProducts,
 } from '../../../services/product.services';
 import { PRODUCT_COLUMNS } from '../../../constant/columns';
 import { Box } from '@mui/material';
 import ProductForm from '../../../components/ProductForm';
-import { ModalProductStyles } from '../../../constant/styles';
+import {
+    ModalCustomStyles,
+    ModalProductStyles,
+} from '../../../constant/styles';
 import Loader from '../../../components/Loader';
+import Confirmation from '../../../components/Confirmation';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>();
@@ -24,6 +29,10 @@ const Product = (): JSX.Element => {
 
     const [open, setOpen] = useState<boolean>(false);
     const [product, setProduct] = useState<ProductType>();
+
+    const [openDelModal, setOpenDelModal] = useState<boolean>(false);
+    const [isDelete, setIsDelete] = useState(false);
+    const [productId, setProductId] = useState<number>(0);
 
     const [action, setAction] = useState<'edit' | 'add'>('add');
     const [loading, setLoading] = useState<boolean>(false);
@@ -44,7 +53,9 @@ const Product = (): JSX.Element => {
     };
 
     const deleteAction = (id: number): void => {
-        alert('del');
+        setIsDelete(false);
+        setProductId(id);
+        setOpenDelModal(true);
     };
 
     const editAction = async (id: number): Promise<void> => {
@@ -59,8 +70,29 @@ const Product = (): JSX.Element => {
         });
     }, [page]);
 
+    const deleteProductAction = async (): Promise<void> => {
+        setLoading(true);
+        await deleteProduct(productId);
+        closeDelModal();
+        await fetchProducts();
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (isDelete) {
+            deleteProductAction().catch((err) => {
+                console.log(err);
+            });
+        }
+    }, [isDelete]);
+
     const closeProductModal = (): void => {
         setOpen(false);
+    };
+
+    const closeDelModal = (): void => {
+        setOpenDelModal(false);
+        setIsDelete(false);
     };
 
     const updateProductAfter = (data: ProductType[]): void => {
@@ -97,6 +129,20 @@ const Product = (): JSX.Element => {
                 />
             </Modal>
             {loading && <Loader overlay={true} />}
+
+            <Modal
+                isOpen={openDelModal}
+                style={ModalCustomStyles}
+                onRequestClose={closeDelModal}
+            >
+                <Confirmation
+                    title="Do you want to remove the product?"
+                    yesAction={() => {
+                        setIsDelete(true);
+                    }}
+                    cancelAction={closeDelModal}
+                />
+            </Modal>
         </MainContainer>
     );
 };
