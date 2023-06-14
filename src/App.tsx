@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import Home from './containers/Home';
 import Root from './routes/Root';
 import Login from './containers/Login';
@@ -13,6 +14,7 @@ import GlobalStyles from './assets/style/global.styled';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SingleProduct from './containers/Products/SingleProduct';
+import { initialOptions } from './constant/paypal';
 
 const App = (): JSX.Element => {
     const router = createBrowserRouter([
@@ -34,13 +36,15 @@ const App = (): JSX.Element => {
 
     return (
         <>
-            <GlobalStyles />
-            <RouterProvider router={router} />
-            <ToastContainer
-                autoClose={4000}
-                theme="colored"
-                style={{ marginTop: '40px' }}
-            />
+            <PayPalScriptProvider options={initialOptions}>
+                <GlobalStyles />
+                <RouterProvider router={router} />
+                <ToastContainer
+                    autoClose={4000}
+                    theme="colored"
+                    style={{ marginTop: '40px' }}
+                />
+            </PayPalScriptProvider>
         </>
     );
 };

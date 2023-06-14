@@ -136,7 +136,7 @@ const Product = (): JSX.Element => {
                     dataLength={products.length}
                     next={fetchProducts}
                     hasMore={hasMore}
-                    loader={<Loader />}
+                    loader={<Loader overlay={false} />}
                 >
                     <ProductContainer>
                         {products.map((item, index) => (

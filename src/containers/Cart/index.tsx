@@ -1,35 +1,58 @@
+// imports
 import { useEffect, useState } from 'react';
-import withAuth from '../../hoc/withAuth';
-import useUserRole from '../../hooks/useUserRole';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+
+// redux
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import {
     deleteAllCartProducts,
     fetchCartProducts,
 } from '../../features/cartSlice';
-import { toast } from 'react-toastify';
-import { BtnContainer, Container } from './cart.styled';
-import Heading from '../../components/Heading';
-import IndividualCart from './IndividualCart';
-import AppButton from '../../components/AppButton';
+
+// hoc and hook
+import withAuth from '../../hoc/withAuth';
+import useUserRole from '../../hooks/useUserRole';
+
+// services
+import { placeOrder } from '../../services/order.services';
+
+// interface
 import {
     type Products,
     type CartItem,
     type OrderType,
 } from '../../utils/interface/interface';
+
+// styles
+import { BtnContainer, Container } from './cart.styled';
 import { PriceDetail } from '../Products/product.styled';
-import { placeOrder } from '../../services/order.services';
-import { useNavigate } from 'react-router-dom';
+import { ModalCustomStyles } from '../../constant/styles';
+
+// components
+import Heading from '../../components/Heading';
+import IndividualCart from './IndividualCart';
+import Loader from '../../components/Loader';
+import Payment from '../../components/Payment';
+import AppButton from '../../components/AppButton';
 
 const Cart = (): JSX.Element => {
     useUserRole({ rolesPermitted: ['C'] });
-    const [total, setTotal] = useState(0);
+    const navigate = useNavigate();
 
+    // states
+    const [total, setTotal] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [paid, setPaid] = useState<boolean>(false);
+    const [checkout, setcheckout] = useState<boolean>(false);
+
+    // redux
     const dispatch = useAppDispatch();
     const { user_id } = useAppSelector((state) => state.user);
     const { products } = useAppSelector((state) => state.cart);
 
-    const navigate = useNavigate();
-
+    // calculate total of checkout
     const calcTotal = (): void => {
         const prod = products as CartItem[];
         const finaltotal = prod.reduce((acc: number, current: CartItem) => {
@@ -42,13 +65,15 @@ const Cart = (): JSX.Element => {
         setTotal(finaltotal);
     };
 
+    // fetch user's cart products
     const fetchProducts = async (): Promise<void> => {
         if (user_id) {
             await dispatch(fetchCartProducts(user_id));
         }
     };
 
-    const handlePlaceOrder = (): void => {
+    // after payal payment is success remove cart items
+    const paymentSuccess = (): void => {
         const prod = products as CartItem[];
 
         const orderProducts: Products[] = prod.map((item) => {
@@ -66,6 +91,8 @@ const Cart = (): JSX.Element => {
             products: orderProducts,
         };
 
+        setLoading(true);
+
         placeOrder(data)
             .then((resp) => {
                 const id = Number(user_id);
@@ -74,7 +101,7 @@ const Cart = (): JSX.Element => {
                         alert(err);
                     }
                 );
-
+                setLoading(true);
                 navigate(`/orders/${resp.data.order_id}`);
             })
             .catch((err) => {
@@ -82,6 +109,7 @@ const Cart = (): JSX.Element => {
             });
     };
 
+    // side effects
     useEffect(() => {
         fetchProducts().catch((error) => {
             console.log(error);
@@ -93,8 +121,13 @@ const Cart = (): JSX.Element => {
         calcTotal();
     }, [products]);
 
+    useEffect(() => {
+        paid && paymentSuccess();
+    }, [paid]);
+
     return (
         <Container>
+            {loading && <Loader overlay={true} />}
             <Heading text="My Cart" fontSize="26px" />
             <span>Total Products : {products.length}</span>
             {products.length === 0 && (
@@ -115,16 +148,30 @@ const Cart = (): JSX.Element => {
                             );
                         })}
                     </div>
+
                     <BtnContainer>
                         <PriceDetail>TOTAL: RS.{total}</PriceDetail>
-
-                        <AppButton
-                            text="Checkout"
-                            action={() => {
-                                handlePlaceOrder();
-                            }}
-                        />
+                        {!checkout && (
+                            <AppButton
+                                text="Checkout"
+                                action={() => {
+                                    setcheckout(true);
+                                }}
+                            />
+                        )}
                     </BtnContainer>
+
+                    <Modal
+                        isOpen={checkout}
+                        onRequestClose={() => {
+                            setcheckout(false);
+                        }}
+                        style={ModalCustomStyles}
+                    >
+                        <Heading text="Pay with paypal" fontSize="16px" />
+                        <br />
+                        <Payment setPaid={setPaid} total={total} />
+                    </Modal>
                 </>
             )}
         </Container>
