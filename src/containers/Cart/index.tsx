@@ -36,6 +36,7 @@ import IndividualCart from './IndividualCart';
 import Loader from '../../components/Loader';
 import Payment from '../../components/Payment';
 import AppButton from '../../components/AppButton';
+import { round } from 'lodash';
 
 const Cart = (): JSX.Element => {
     useUserRole({ rolesPermitted: ['C'] });
@@ -150,7 +151,7 @@ const Cart = (): JSX.Element => {
                     </div>
 
                     <BtnContainer>
-                        <PriceDetail>TOTAL: RS.{total}</PriceDetail>
+                        <PriceDetail>TOTAL: $.{round(total, 2)}</PriceDetail>
                         {!checkout && (
                             <AppButton
                                 text="Checkout"

@@ -15,7 +15,6 @@ import {
     PriceDetail,
 } from './product.styled';
 
-import IMG from '../../assets/image/test.jpeg';
 import Heading from '../../components/Heading';
 import AppButton from '../../components/AppButton';
 import useCart from '../../hooks/useCart';
@@ -64,13 +63,15 @@ const SingleProduct = (): JSX.Element => {
     return (
         <SingleContainer>
             <ImageSide>
-                <Image src={IMG} />
+                {product?.images && (
+                    <Image src={`../../public/uploads/${product?.images[0]}`} />
+                )}
             </ImageSide>
             <InfoSide>
                 <Heading fontSize="2.5rem" text={product?.name || ''} />
 
                 <PriceDetail>
-                    Rs. {product?.price} per {product?.unit}
+                    &#36;{product?.price} per {product?.unit}
                 </PriceDetail>
 
                 <div>{product?.description}</div>

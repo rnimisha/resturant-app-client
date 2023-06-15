@@ -11,7 +11,11 @@ export const ModalCustomStyles = {
             transform: 'translate(-50%, -50%)',
             borderRadius: '15px',
             boxShadow: '0 4px 30px rgba(70, 70, 70, 0.09)',
-            border: '1px solid rgba(236, 241, 233, 0.5)'
+            border: '1px solid rgba(236, 241, 233, 0.5)',
+            zIndex: 9998,
+        },
+          overlay: {
+            zIndex: 9998,
         },
     };
 

@@ -7,7 +7,7 @@ import Counter from '../../components/Counter';
 
 import { updateCart } from '../../services/cart.services';
 import { toast } from 'react-toastify';
-import { debounce } from 'lodash';
+import { debounce, round } from 'lodash';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { deleteCartOneProduct } from '../../features/cartSlice';
 
@@ -61,7 +61,7 @@ const IndividualCart = ({ item, fetchProducts }: PropsType): JSX.Element => {
             <Item>
                 <Heading text={item.name as string} fontSize="18px" />
                 <span>
-                    <b>Rs. {item.price} </b>/<i>item</i>
+                    <b>&#36;{item.price} </b>/<i>item</i>
                 </span>
             </Item>
             <ItemCentered>
@@ -77,7 +77,11 @@ const IndividualCart = ({ item, fetchProducts }: PropsType): JSX.Element => {
             <Item>
                 <span>
                     <span style={{ fontWeight: 600 }}>Total :&nbsp;</span>
-                    Rs.{item.price ? item.price * quantity : item.price}
+                    &#36;
+                    {round(
+                        Number(item.price ? item.price * quantity : item.price),
+                        2
+                    )}
                 </span>
             </Item>
         </Individual>

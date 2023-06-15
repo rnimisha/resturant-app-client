@@ -82,8 +82,8 @@ const Product = (): JSX.Element => {
     useEffect(() => {
         getMinMaxPrice()
             .then((data) => {
-                const { minPrice, maxPrice } = data.data;
-                setPriceValue([minPrice, maxPrice]);
+                const { maxPrice } = data.data;
+                setPriceValue([0, maxPrice]);
                 setMaximum(data.data.maxPrice);
             })
             .catch((error) => {
@@ -148,11 +148,11 @@ const Product = (): JSX.Element => {
                                 price={item.price}
                                 unit={item.unit}
                                 category_id={item.category_id}
+                                images={item.images}
                             />
                         ))}
                     </ProductContainer>
                 </InfiniteScroll>
-                )
             </AllProducts>
         </MainContainer>
     );

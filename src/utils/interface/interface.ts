@@ -109,5 +109,14 @@ export interface optionVal {
     value: number | string
 }
 
+export interface AllOrderInfo {
+    orders : OrderType[],
+    total: number
+}
+
+export interface UpdateOrder {
+    order_id: number,
+    order_status: string
+}
 
 export type CheckedCategories = Record<number, string>;

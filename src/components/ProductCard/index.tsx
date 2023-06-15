@@ -14,7 +14,6 @@ import {
     CartBtn,
 } from './productCard.styled';
 
-import IMG from '../../assets/image/test.jpeg';
 import Heading from '../Heading';
 
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
@@ -56,7 +55,9 @@ const ProductCard = (props: ProductType): JSX.Element => {
             }}
         >
             <ImageContainer>
-                <Image src={IMG} />
+                {props.images && props.images?.length > 0 && (
+                    <Image src={`../../public/uploads/${props.images[0]}`} />
+                )}
             </ImageContainer>
             <Information>
                 <LeftInfo>
@@ -64,7 +65,9 @@ const ProductCard = (props: ProductType): JSX.Element => {
                         <Heading text={props.name || ''} fontSize="20px" />
                     </div>
                     <div>
-                        Rs. {props.price} <i>per {props.unit}</i>
+                        <span>
+                            &#36;{props.price} <i>per {props.unit}</i>
+                        </span>
                     </div>
                 </LeftInfo>
                 <RightInfo>
