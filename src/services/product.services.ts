@@ -80,3 +80,16 @@ export const deleteProduct = async (id: number): Promise<AxiosResponse<boolean>>
         throw new Error(JSON.stringify(err));
     }
 }
+
+export const addNewProduct = async (data: any): Promise<AxiosResponse<ProductType>> =>{
+    try{
+        const resp = await api.post(APIROUTES.PRODUCTS, data)
+        console.log(resp)
+        return resp.data
+
+    }catch(error){
+        console.log(error)
+        const err = getErrorResponse(error as AxiosError)
+        throw new Error(JSON.stringify(err));
+    }
+}

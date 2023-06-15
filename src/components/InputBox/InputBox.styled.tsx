@@ -18,6 +18,17 @@ export const TextBox = styled(Field)`
     background: transparent;
 `;
 
+export const SelectField = styled(TextBox)`
+    border-radius: 4px;
+
+    border: ${(props) =>
+        props.err && props.touched
+            ? `2px solid ${COLOR.error}`
+            : `2px solid ${COLOR.primary}`};
+    margin: 10px 0 25px 0px;
+    padding: 10px 5px;
+`;
+
 export const Error = styled.div`
     font-size: 0.8rem;
     color: ${COLOR.error};

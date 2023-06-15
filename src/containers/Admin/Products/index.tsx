@@ -12,7 +12,7 @@ import {
     getProducts,
 } from '../../../services/product.services';
 import { PRODUCT_COLUMNS } from '../../../constant/columns';
-import { Box } from '@mui/material';
+
 import ProductForm from '../../../components/ProductForm';
 import {
     ModalCustomStyles,
@@ -20,6 +20,8 @@ import {
 } from '../../../constant/styles';
 import Loader from '../../../components/Loader';
 import Confirmation from '../../../components/Confirmation';
+import AppButton from '../../../components/AppButton';
+import { Row } from '../../Logout/logout.styled';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>();
@@ -64,11 +66,9 @@ const Product = (): JSX.Element => {
         setOpen(true);
     };
 
-    useEffect(() => {
-        fetchProducts().catch((err) => {
-            console.log(err);
-        });
-    }, [page]);
+    const updateProductAfter = (data: ProductType[]): void => {
+        setProducts(data);
+    };
 
     const deleteProductAction = async (): Promise<void> => {
         setLoading(true);
@@ -77,6 +77,18 @@ const Product = (): JSX.Element => {
         await fetchProducts();
         setLoading(false);
     };
+
+    const addAction = (): void => {
+        setAction('add');
+        setProduct(undefined);
+        setOpen(true);
+    };
+
+    useEffect(() => {
+        fetchProducts().catch((err) => {
+            console.log(err);
+        });
+    }, [page]);
 
     useEffect(() => {
         if (isDelete) {
@@ -95,14 +107,17 @@ const Product = (): JSX.Element => {
         setIsDelete(false);
     };
 
-    const updateProductAfter = (data: ProductType[]): void => {
-        setProducts(data);
-    };
-
     return (
         <MainContainer>
-            <Heading text="Manage Products" />
-            <Box mt={4} />
+            <Row style={{ width: '100%', margin: '20px 0' }}>
+                <div>
+                    <Heading text="Manage Products" />
+                </div>
+                <div>
+                    <AppButton text="Add Product" action={addAction} />
+                </div>
+            </Row>
+
             <AppTable
                 data={products as ProductType[]}
                 total={total}

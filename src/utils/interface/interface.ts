@@ -58,7 +58,8 @@ export interface ProductType {
     unit?: string,
     page?: number,
     description?: string,
-    images?: string[]
+    images?: string[],
+    image?: string
 }
 
 export interface ProductInfo {
@@ -101,6 +102,11 @@ export interface OrderType {
     payment_method: string
     paid: 'F' | 'T'
     products?: Products[]
+}
+
+export interface optionVal {
+    option: string,
+    value: number | string
 }
 
 
