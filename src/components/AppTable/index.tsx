@@ -12,7 +12,11 @@ import {
 } from '../../utils/interface/interface';
 import { type Column } from '../../constant/columns';
 import COLOR from '../../constant/color';
-import { DeleteIcon, UpdateIcon } from '../../containers/Cart/cart.styled';
+import {
+    DeleteIcon,
+    UpdateIcon,
+    ViewIcon,
+} from '../../containers/Cart/cart.styled';
 
 interface PropsType {
     data: ProductType[] | OrderType[];
@@ -22,6 +26,7 @@ interface PropsType {
     columns: readonly Column[];
     deleteAction?: (id: number) => void;
     editAction?: (id: number) => Promise<void>;
+    viewAction?: (id: number) => void;
     id: 'product_id' | 'order_id';
 }
 const AppTable = ({
@@ -32,6 +37,7 @@ const AppTable = ({
     columns,
     deleteAction,
     editAction,
+    viewAction,
     id,
 }: PropsType): JSX.Element => {
     const handleChangePage = (event: unknown, newPage: number): void => {
@@ -95,7 +101,23 @@ const AppTable = ({
                                             </TableCell>
                                         );
                                     })}
+
                                     <TableCell>
+                                        {viewAction && (
+                                            <ViewIcon
+                                                onClick={() => {
+                                                    if (viewAction && id in row)
+                                                        viewAction(
+                                                            Number(
+                                                                row[
+                                                                    id as keyof typeof row
+                                                                ]
+                                                            )
+                                                        );
+                                                }}
+                                            />
+                                        )}
+
                                         {editAction && (
                                             <UpdateIcon
                                                 onClick={() => {
@@ -134,6 +156,7 @@ const AppTable = ({
                     </TableBody>
                 </Table>
             </TableContainer>
+
             <TablePagination
                 labelRowsPerPage=""
                 rowsPerPageOptions={[]}

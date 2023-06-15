@@ -15,10 +15,14 @@ import { ORDER_COLUMNS, STATUS_OPTION } from '../../../constant/columns';
 import { Row } from '../../Logout/logout.styled';
 import SelectBox from '../../../components/InputBox/SelectBox';
 import Modal from 'react-modal';
-import { ModalCustomStyles } from '../../../constant/styles';
+import {
+    ModalCustomStyles,
+    ModalProductStyles,
+} from '../../../constant/styles';
 import EditForm from './EditForm';
 import { type FormikHelpers } from 'formik';
 import Loader from '../../../components/Loader';
+import OrderDetail from '../../Order/OrderDetail';
 
 const Orders = (): JSX.Element => {
     const [allOrders, setAllOrders] = useState<OrderType[]>();
@@ -29,6 +33,7 @@ const Orders = (): JSX.Element => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [openEdit, setOpenEdit] = useState<boolean>(false);
+    const [openView, setOpenView] = useState<boolean>(false);
     const [currentOrderId, setCurrentOrderId] = useState<number>();
 
     const fetchOrders = async (): Promise<void> => {
@@ -48,6 +53,11 @@ const Orders = (): JSX.Element => {
 
     const editAction = async (id: number): Promise<void> => {
         setOpenEdit(true);
+        setCurrentOrderId(id);
+    };
+
+    const viewAction = (id: number): void => {
+        setOpenView(true);
         setCurrentOrderId(id);
     };
 
@@ -104,6 +114,7 @@ const Orders = (): JSX.Element => {
                 setPage={setPage}
                 columns={ORDER_COLUMNS}
                 editAction={editAction}
+                viewAction={viewAction}
                 id="order_id"
             />
 
@@ -118,6 +129,16 @@ const Orders = (): JSX.Element => {
                     order_id={Number(currentOrderId)}
                     action={handleUpdateStatus}
                 />
+            </Modal>
+
+            <Modal
+                isOpen={openView}
+                style={ModalProductStyles}
+                onRequestClose={() => {
+                    setOpenView(false);
+                }}
+            >
+                {currentOrderId && <OrderDetail orderId={currentOrderId} />}
             </Modal>
 
             {loading && <Loader overlay={true} />}
