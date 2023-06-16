@@ -10,18 +10,22 @@ import {
 interface PropsType {
     item: AnalyticsCountType;
     icon: string;
+    format?: string;
 }
-const CountCard = ({ item, icon }: PropsType): JSX.Element => {
+const CountCard = ({ item, icon, format }: PropsType): JSX.Element => {
     return (
         <Container>
-            <Element width="40%">
+            <Element width="55%">
+                <Name>{item.name}</Name>
+                <Total>
+                    {format}
+                    {item.total}
+                </Total>
+            </Element>
+            <Element width="44%">
                 <StyledIcon className="material-symbols-rounded">
                     {icon}
                 </StyledIcon>
-            </Element>
-            <Element width="55%">
-                <Total>{item.total}</Total>
-                <Name>{item.name}</Name>
             </Element>
         </Container>
     );

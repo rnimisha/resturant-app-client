@@ -125,3 +125,21 @@ export interface AnalyticsCountType{
     name: string,
     total: number
 }
+
+export interface RevenuePerMonth{
+    total: number,
+    year: number,
+    month: string,
+    mm: string
+}
+
+export interface DatasetType{
+    label: string,
+    data: Array<number | null>,
+    borderColor: string,
+    backgroundColor: string
+}
+export interface LineChartData {
+    labels : string[],
+    datasets: DatasetType[]
+}

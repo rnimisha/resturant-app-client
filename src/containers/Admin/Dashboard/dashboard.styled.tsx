@@ -21,6 +21,7 @@ export const Row = styled.div<RowProps>`
     width: 100%;
     flex-wrap: wrap;
     gap: 0.5rem;
+    align-items: center;
     justify-content: ${(props) => props.justifyContent || 'space-between'};
 `;
 

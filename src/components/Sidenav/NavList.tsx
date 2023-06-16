@@ -6,8 +6,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { type navType } from '../../constant/navitems';
 
 import { Link } from 'react-router-dom';
-import Icon from '@mui/material/Icon';
 import COLOR from '../../constant/color';
+import { MiniIcon } from '../CountCard/CountCard.styled';
 
 interface PropsType {
     navlist: navType;
@@ -36,9 +36,9 @@ const NavList = ({ navlist, open }: PropsType): JSX.Element => {
                                 }}
                             >
                                 <span>
-                                    <Icon className="material-symbols-rounded">
+                                    <MiniIcon className="material-symbols-rounded">
                                         {item.icon}
-                                    </Icon>
+                                    </MiniIcon>
                                 </span>
                             </ListItemIcon>
                             <ListItemText

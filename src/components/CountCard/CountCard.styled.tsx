@@ -10,30 +10,40 @@ export const Container = styled.div`
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    padding: 20px;
+    padding: 20px 30px;
 `;
 
 export const Element = styled.div<{ width: string }>`
     width: ${(props) => props.width};
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Total = styled.div`
     width: 100%;
-    font-size: 28px;
+    font-size: 22px;
     color: ${COLOR.primary};
     font-weight: 600;
-    text-align: center;
 `;
 
 export const Name = styled.div`
     width: 100%;
     font-weight: 500;
-    text-align: center;
 `;
 
 export const StyledIcon = styled(Icon)`
-    height: 100%;
-    width: 100%;
-    font-size: 2.2rem;
+    height: 100% !important;
+    width: 100% !important;
+    font-size: 2.8rem !important;
     color: ${COLOR.secondary};
+    text-align: right;
+`;
+
+export const MiniIcon = styled(Icon)`
+    height: 100% !important;
+    width: 100% !important;
+    font-size: 1.2rem !important;
+    color: ${COLOR.primary};
+    font-weight: bold;
+    text-align: right;
 `;

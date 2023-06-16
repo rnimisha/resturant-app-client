@@ -42,5 +42,5 @@ export const CountIcons = {
     'Revenue' : 'monetization_on',
     'Orders' : 'local_mall',
     'Customers' : 'group',
-    'Product' : 'fastfood'
+    'Products' : 'fastfood'
 }
