@@ -15,6 +15,8 @@ export const getProducts = async (filter: ProductType): Promise<AxiosResponse<Pr
         endpoint = filter.minPrice ? `${endpoint}&minPrice=${filter.minPrice}` : endpoint
         endpoint = filter.maxPrice ? `${endpoint}&maxPrice=${filter.maxPrice}` : endpoint
 
+        endpoint = filter.orderBy ? `${endpoint}&order=${filter.orderBy}` : endpoint
+
         if(filter.category_id){
             const categories = filter.category_id as number[]
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

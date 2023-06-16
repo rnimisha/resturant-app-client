@@ -59,7 +59,8 @@ export interface ProductType {
     page?: number,
     description?: string,
     images?: string[],
-    image?: string
+    image?: string,
+    orderBy?: string
 }
 
 export interface ProductInfo {
@@ -133,11 +134,17 @@ export interface RevenuePerMonth{
     mm: string
 }
 
+export interface RevenuePerCategory{
+    total: number,
+    category_name: string
+}
+
 export interface DatasetType{
     label: string,
     data: Array<number | null>,
-    borderColor: string,
-    backgroundColor: string
+    borderColor: string | string[],
+    backgroundColor: string | string[]
+    borderWidth?: number
 }
 export interface LineChartData {
     labels : string[],

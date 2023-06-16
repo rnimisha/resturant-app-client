@@ -9,6 +9,7 @@ import {
 
 import {
     AllProducts,
+    BarContainer,
     FilterContainer,
     MainContainer,
     ProductContainer,
@@ -18,6 +19,8 @@ import { getMinMaxPrice, getProducts } from '../../services/product.services';
 import ProductCard from '../../components/ProductCard';
 import Filter from '../../components/Filter';
 import Loader from '../../components/Loader';
+import SelectBox from '../../components/InputBox/SelectBox';
+import { Filter_OPTION } from '../../constant/columns';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -29,6 +32,7 @@ const Product = (): JSX.Element => {
     const [maximum, setMaximum] = useState<number>(200);
     const [selectedCategories, setSelectedCategories] =
         useState<CheckedCategories>({});
+    const [orderBy, setOrderBy] = useState<string>('default');
     const [loading, setLoading] = useState<boolean>(false);
 
     // --------- categories filter
@@ -41,6 +45,12 @@ const Product = (): JSX.Element => {
         }
     };
 
+    const handleOrderChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ): void => {
+        setOrderBy(e.currentTarget.value);
+    };
+
     // --------- get products
     const fetchProducts = async (): Promise<void> => {
         try {
@@ -51,9 +61,12 @@ const Product = (): JSX.Element => {
                 minPrice: priceValue[0],
                 maxPrice: priceValue[1],
                 category_id: categories,
+                orderBy,
             });
 
+            console.log(response.data);
             if (response.data.product.length > 0) {
+                console.log('1');
                 setProducts((prev) => [...prev, ...response.data.product]);
                 setPage((prev) => prev + 1);
             } else {
@@ -104,7 +117,7 @@ const Product = (): JSX.Element => {
                     console.log(error);
                 });
         }
-    }, [page, initialLoad, minMaxValue, selectedCategories]);
+    }, [page, initialLoad, minMaxValue, selectedCategories, orderBy]);
 
     // ---------- change min max price
     useEffect(() => {
@@ -116,7 +129,7 @@ const Product = (): JSX.Element => {
     useEffect(() => {
         setProducts([]);
         setPage(1);
-    }, [minMaxValue, selectedCategories]);
+    }, [minMaxValue, selectedCategories, orderBy]);
 
     return (
         <MainContainer>
@@ -132,6 +145,16 @@ const Product = (): JSX.Element => {
 
             <AllProducts>
                 {loading && <Loader />}
+                <BarContainer>
+                    <div>
+                        <SelectBox
+                            name="filter_type"
+                            onChange={handleOrderChange}
+                            defaultVal={'default'}
+                            options={Filter_OPTION}
+                        />
+                    </div>
+                </BarContainer>
                 <InfiniteScroll
                     dataLength={products.length}
                     next={fetchProducts}
