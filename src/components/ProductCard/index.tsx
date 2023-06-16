@@ -56,7 +56,7 @@ const ProductCard = (props: ProductType): JSX.Element => {
         >
             <ImageContainer>
                 {props.images && props.images?.length > 0 && (
-                    <Image src={`../../public/uploads/${props.images[0]}`} />
+                    <Image src={`../../uploads/${props.images[0]}`} />
                 )}
             </ImageContainer>
             <Information>

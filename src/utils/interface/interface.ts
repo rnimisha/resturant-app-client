@@ -120,3 +120,8 @@ export interface UpdateOrder {
 }
 
 export type CheckedCategories = Record<number, string>;
+
+export interface AnalyticsCountType{
+    name: string,
+    total: number
+}

@@ -64,7 +64,7 @@ const SingleProduct = (): JSX.Element => {
         <SingleContainer>
             <ImageSide>
                 {product?.images && (
-                    <Image src={`../../public/uploads/${product?.images[0]}`} />
+                    <Image src={`../../uploads/${product?.images[0]}`} />
                 )}
             </ImageSide>
             <InfoSide>
