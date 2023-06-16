@@ -21,8 +21,8 @@ export const PRODUCT_COLUMNS : readonly Column[] = [
 ];
 
 export const ORDER_COLUMNS : readonly Column[] = [
-    { id: 'order_id', label: 'Order', minWidth: 180, format: (value:string) =>  `#${value}`, },
-    { id: 'order_status', label: 'Status', minWidth: 100 },
+    { id: 'order_id', label: 'Order', minWidth: 100, format: (value:string) =>  `#${value}`, },
+    { id: 'order_status', label: 'Status', align: 'center', minWidth: 100  },
     {
         id: 'order_date',
         label: 'Time',
@@ -50,5 +50,21 @@ export const STATUS_OPTION: optionVal[] = [
         option: 'Completed',
         value: 'Completed'
     },
+
+]
+
+export const Filter_OPTION: optionVal[] = [
+    {
+        option: 'Default',
+        value: 'default'
+    },
+    {
+        option: 'Price Lowest to Highest',
+        value: 'price'
+    },
+    {
+        option: 'Price Highest to Lowest',
+        value: 'price desc'
+    }
 
 ]

@@ -15,8 +15,10 @@ const Logout = (): JSX.Element => {
         dispatch(logout({}));
         navigate('/');
     };
+    const cancelAction = (): void => {
+        navigate(-1);
+    };
 
-    const cancelAction = (): void => {};
     return (
         <MainContainer>
             <Confirmation

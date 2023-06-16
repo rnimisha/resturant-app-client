@@ -59,11 +59,7 @@ export const ADMIN_SIDE_NAV = [
 ]
 
 export const ADMIN_SIDE_NAV_SETTINGS = [
-    {
-        path: '/admin/profile',
-        name: 'Profile',
-        icon: 'account_circle'
-    },
+
     {
         path: '/logout',
         name: 'Logout',   

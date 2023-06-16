@@ -17,6 +17,7 @@ import {
     UpdateIcon,
     ViewIcon,
 } from '../../containers/Cart/cart.styled';
+import { StatusColored } from '../../containers/Admin/Products/product.styled';
 
 interface PropsType {
     data: ProductType[] | OrderType[];
@@ -92,11 +93,22 @@ const AppTable = ({
                                                 align={column.align}
                                                 sx={{ padding: '30px 15px' }}
                                             >
-                                                {column.format
-                                                    ? column.format(
-                                                          value as string
-                                                      )
-                                                    : value}
+                                                {}
+
+                                                {column.format ? (
+                                                    column.format(
+                                                        value as string
+                                                    )
+                                                ) : column.id ===
+                                                  'order_status' ? (
+                                                    <StatusColored
+                                                        name={value as string}
+                                                    >
+                                                        {value}
+                                                    </StatusColored>
+                                                ) : (
+                                                    value
+                                                )}
                                                 {}
                                             </TableCell>
                                         );

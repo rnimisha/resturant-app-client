@@ -4,10 +4,6 @@ export const REVENUEOPTION = {
         legend: {
             position: 'top' as const,
         },
-        title: {
-            display: true,
-            text: 'Total Revenue By Month',
-        },
     },
     scales: {
         y: {
@@ -19,4 +15,13 @@ export const REVENUEOPTION = {
             },
         },
     },
+};
+
+export const CATEGORYOPTIONS = {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: 'top' as const,
+        }
+    }
 };

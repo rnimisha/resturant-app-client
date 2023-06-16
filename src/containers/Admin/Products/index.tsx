@@ -22,6 +22,7 @@ import Loader from '../../../components/Loader';
 import Confirmation from '../../../components/Confirmation';
 import AppButton from '../../../components/AppButton';
 import { Row } from '../../Logout/logout.styled';
+import { Box } from '@mui/material';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>();
@@ -128,6 +129,7 @@ const Product = (): JSX.Element => {
                 editAction={editAction}
                 id="product_id"
             />
+            <Box mb={4} />
 
             <Modal
                 isOpen={open}

@@ -23,6 +23,7 @@ import EditForm from './EditForm';
 import { type FormikHelpers } from 'formik';
 import Loader from '../../../components/Loader';
 import OrderDetail from '../../Order/OrderDetail';
+import { Box } from '@mui/material';
 
 const Orders = (): JSX.Element => {
     const [allOrders, setAllOrders] = useState<OrderType[]>();
@@ -37,7 +38,8 @@ const Orders = (): JSX.Element => {
     const [currentOrderId, setCurrentOrderId] = useState<number>();
 
     const fetchOrders = async (): Promise<void> => {
-        const resp = await getAllOrders(status);
+        const p = page + 1;
+        const resp = await getAllOrders(status, p);
         setAllOrders(resp.data.orders);
         setTotal(resp.data.total);
     };
@@ -117,6 +119,7 @@ const Orders = (): JSX.Element => {
                 viewAction={viewAction}
                 id="order_id"
             />
+            <Box mb={4} />
 
             <Modal
                 isOpen={openEdit}

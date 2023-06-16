@@ -1,7 +1,8 @@
 import { type AxiosError } from 'axios';
 
-import { type RevenuePerMonth, type ErrorResponse, type FieldError, type userError, type LineChartData } from './interface/interface';
+import { type RevenuePerMonth, type ErrorResponse, type FieldError, type userError, type LineChartData, type RevenuePerCategory } from './interface/interface';
 import moment from 'moment';
+import { CHARTCOLORS } from '../constant/color';
 
 export const extractError = (error: FieldError[]): userError => {
     const err = error.reduce((acc, current) => ({ ...acc, [current.field]: current.description }), {});
@@ -83,16 +84,38 @@ export const extractRevenueLablelData = (data: RevenuePerMonth[]): LineChartData
             {
                 label: `Current(${currentYear}) Revenue`,
                 data: currentRevenueData,
-                borderColor: 'green',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: CHARTCOLORS[0],
+                backgroundColor: CHARTCOLORS[0],
             },
             {
                 label: `Previous(${previousYear}) Revenue`,
                 data: previousRevenueData,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: CHARTCOLORS[8],
+                backgroundColor: CHARTCOLORS[8],
             }
         ]
     }
+
+}
+
+export const extractRevenueCategory = (data: RevenuePerCategory[]): LineChartData =>{
+
+    const labels = data.map((item)=> item.category_name)
+    const revenue = data.map((item)=> item.total)
+
+    const colors = Object.values(CHARTCOLORS)
+
+    return {
+        labels,
+        datasets: [
+            {
+                label: 'Revenue By Category',
+                data: revenue,
+                backgroundColor: colors,
+                borderColor: colors,
+                borderWidth: 1,
+            },
+        ],
+    };
 
 }
