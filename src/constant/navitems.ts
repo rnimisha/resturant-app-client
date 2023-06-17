@@ -29,6 +29,10 @@ export const NAVITEMS_WITHAUTH = [
         name: 'Cart',
     },
     {
+        path: '/orders/myorders',
+        name: 'Order',
+    },
+    {
         path: '/logout',
         name: 'Logout',
     },

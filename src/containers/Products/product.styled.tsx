@@ -39,7 +39,6 @@ export const AllProducts = styled.div`
     width: 80%;
     position: absolute;
     right: 0;
-
     @media (max-width: 800px) {
         width: 70%;
     }

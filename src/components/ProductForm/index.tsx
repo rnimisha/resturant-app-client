@@ -93,7 +93,6 @@ const ProductForm = ({
         actions: FormikHelpers<ProductType>
     ): Promise<void> => {
         setLoading(true);
-        closeModal();
 
         const formData = new FormData();
         Object.keys(values).forEach((key) => {
@@ -105,6 +104,7 @@ const ProductForm = ({
             console.log(response.data);
             if (setProducts && allProducts)
                 setProducts([response.data, ...allProducts]);
+            closeModal();
         } catch (error) {
             const err = JSON.parse((error as Error).message) as ErrorResponse;
             if (err.fieldError != null) {

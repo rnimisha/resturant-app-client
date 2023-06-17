@@ -12,6 +12,7 @@ import {
     BarContainer,
     FilterContainer,
     MainContainer,
+    PriceDetail,
     ProductContainer,
 } from './product.styled';
 
@@ -21,6 +22,7 @@ import Filter from '../../components/Filter';
 import Loader from '../../components/Loader';
 import SelectBox from '../../components/InputBox/SelectBox';
 import { Filter_OPTION } from '../../constant/columns';
+import { Box } from '@mui/material';
 
 const Product = (): JSX.Element => {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -176,6 +178,17 @@ const Product = (): JSX.Element => {
                         ))}
                     </ProductContainer>
                 </InfiniteScroll>
+                {!loading && products.length === 0 && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <PriceDetail>No match found!</PriceDetail>
+                    </Box>
+                )}
             </AllProducts>
         </MainContainer>
     );

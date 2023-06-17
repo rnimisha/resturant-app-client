@@ -17,10 +17,12 @@ export const placeOrder = async(data: OrderType): Promise<AxiosResponse<{order_i
     }
 }
 
-export const getAllOrders = async(status: string, page: number): Promise<AxiosResponse<AllOrderInfo>> =>{
+export const getAllOrders = async(status: string, page: number, userId: number| undefined): Promise<AxiosResponse<AllOrderInfo>> =>{
     try{
+        let endpoint = `${APIROUTES.ORDER}/all?status=${status}&page=${page}`;
+        endpoint = userId ?  `${endpoint}&userId=${userId}`: endpoint
         
-        const response = await api.get(`${APIROUTES.ORDER}/all?status=${status}&page=${page}`)
+        const response = await api.get(endpoint)
         return response.data
 
     }catch(error){

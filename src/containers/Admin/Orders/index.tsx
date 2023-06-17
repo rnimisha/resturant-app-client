@@ -39,7 +39,7 @@ const Orders = (): JSX.Element => {
 
     const fetchOrders = async (): Promise<void> => {
         const p = page + 1;
-        const resp = await getAllOrders(status, p);
+        const resp = await getAllOrders(status, p, undefined);
         setAllOrders(resp.data.orders);
         setTotal(resp.data.total);
     };
@@ -51,7 +51,7 @@ const Orders = (): JSX.Element => {
                 setAllOrders([]);
             }
         });
-    }, [status]);
+    }, [status, page]);
 
     const editAction = async (id: number): Promise<void> => {
         setOpenEdit(true);

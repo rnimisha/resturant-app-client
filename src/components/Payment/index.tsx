@@ -4,6 +4,7 @@ import {
     type CreateOrderData,
 } from '@paypal/paypal-js';
 import { PayPalButtons } from '@paypal/react-paypal-js';
+import { round } from 'lodash';
 
 interface PropsType {
     setPaid: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ const Payment = ({ setPaid, total }: PropsType): JSX.Element => {
         data: CreateOrderData,
         actions: CreateOrderActions
     ): Promise<any> => {
+        const t = round(total, 2);
         // Order is created on the server and the order id is returned
         return await fetch(
             'http://localhost:3000/payment/my-server/create-paypal-order',
@@ -24,7 +26,7 @@ const Payment = ({ setPaid, total }: PropsType): JSX.Element => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    total,
+                    total: t,
                 }),
             }
         )
