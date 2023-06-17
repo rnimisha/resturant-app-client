@@ -21,6 +21,7 @@ import {
 } from '../../constant/navitems';
 import COLOR from '../../constant/color';
 import { useAppSelector } from '../../app/hook';
+import CartIcon from './CartIcon';
 
 interface Props {
     window?: () => Window;
@@ -54,7 +55,7 @@ const Navbar = (props: Props): JSX.Element => {
             sx={{ textAlign: 'center', width: '100%' }}
         >
             <Typography variant="h6" sx={{ my: 2 }}>
-                Resturnant Name
+                Tastelicious
             </Typography>
             <Divider />
             <List>
@@ -110,13 +111,17 @@ const Navbar = (props: Props): JSX.Element => {
                             display: { xs: 'none', sm: 'block' },
                         }}
                     >
-                        Resturant
+                        Tastelicious
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item, index) => (
                             <Link to={item.path} key={index}>
                                 <Button sx={{ color: COLOR.black }}>
-                                    {item.name}
+                                    {item.name === 'Cart' ? (
+                                        <CartIcon />
+                                    ) : (
+                                        item.name
+                                    )}
                                 </Button>
                             </Link>
                         ))}

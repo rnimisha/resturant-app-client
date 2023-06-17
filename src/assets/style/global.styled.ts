@@ -31,6 +31,7 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
     flex-direction: column;
   }
+
 `;
 
 export default GlobalStyles;
